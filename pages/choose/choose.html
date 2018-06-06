@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>功能</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			.Choose{
+				height: 200px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+			.ChooseItem{
+				width: 100px;
+				height: 50px;
+				text-align: center;
+				line-height: 50px;
+				margin: 0 auto 50px auto;
+				background: #007aff;
+				color: #fff;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="Choose">
+			<div class="ChooseItem" onclick="ToWage()">工资录入</div>
+			<div class="ChooseItem" onclick="ToOrder()">订单录入</div>
+			
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var Url = 'http://220.248.107.62:8086/gxJK/'
+//			var Url = 'http://http://205.168.1.112:8082/'
+			var departmentList = []
+			var ReLogin = function(){
+				mui.openWindow({
+					    url:'../../index.html',
+					    id:'index.html',
+					})
+			}
+			var ToOrder = function(IDX){
+				//window.localStorage.setItem('departmentId',departmentList[IDX].ID);
+				mui.openWindow({
+				    url:'../orderList/index.html',
+				    id:'orderList/index.html',
+				})
+			}
+			var ToWage = function(IDX){
+				mui.openWindow({
+				    url:'../wage/index.html',
+				    id:'wage/index.html',
+				})
+			}
+			
+		</script>
+	</body>
+
+</html>

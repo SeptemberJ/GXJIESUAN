@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>功能</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			html , body{
+				background: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">功能</h1>
+		</header>
+		<footer class="tabBar">
+			<div class="mui-content" style="height: 100%;background: #007aff;">
+			    <div class="mui-row">
+			        <div class="mui-col-sm-12 mui-col-xs-12 " onclick="GoDepartment()">
+			            	切换部门
+			        </div>
+			        <!--<div class="mui-col-sm-6 mui-col-xs-6 " onclick="GoSearch()">
+			        		查询
+			        </div>-->
+			    </div>
+		   </div>
+		</footer>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+			    subpages:[{
+			      url:'choose.html',
+			      id:'choose.html',
+			      styles:{
+			        top:'45px',
+			        bottom:'0px'
+			      }
+			    }],
+			});
+			var GoDepartment = function(){
+				mui.openWindow({
+				    url:'../department/index.html',
+				    id:'department/index.html',
+				})
+			}
+			var GoSearch =function(){
+				mui.openWindow({
+				    url:'../search/index.html',
+				    id:'search/index.html',
+				})
+			}
+		</script>
+	</body>
+
+</html>

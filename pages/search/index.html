@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查询</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			.FloatRight{
+				float: right;
+				color: #dd524d;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">查询</h1>
+			<span id="addOneRecord" class="mui-icon mui-icon-plus FloatRight"></span>
+			
+		</header>
+		<section style="margin-top: 42px;">
+			<div class="mui-input-row mui-search">
+			    <input type="search" class="mui-input-clear" placeholder="">
+			</div>
+		</section>
+		<footer class="tabBar">
+			<div class="mui-content" style="height: 100%;background: #63B8FF;">
+			    <div class="mui-row">
+			        <div class="mui-col-sm-6 mui-col-xs-6 " onclick="GoDepartment()">
+			            	部门
+			        </div>
+			        <div class="mui-col-sm-6 mui-col-xs-6 " onclick="GoSearch()">
+			        		查询
+			        </div>
+			    </div>
+		   </div>
+		</footer>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+			    subpages:[{
+			      url:'list.html',
+			      id:'list.html',
+			      styles:{
+			        top:'79px',
+			        bottom:'0px'
+			      }
+			    }],
+			});
+			
+			var addOneRecord = document.getElementById('addOneRecord');
+			var GoDepartment = function(){
+				mui.openWindow({
+				    url:'../department/index.html',
+				    id:'department/index.html',
+				    styles:{
+				     
+				    },
+				    extras:{
+				      
+				    },
+				    createNew:false,
+				    show:{
+				      autoShow:true,
+				    },
+				    waiting:{
+				      autoShow:true,
+				      title:'正在加载...',
+				      options:{
+				      	
+				      }
+				    }
+				})
+			}
+			var GoSearch =function(){
+				mui.openWindow({
+				    url:'../search/index.html',
+				    id:'search/index.html',
+				    styles:{
+				     
+				    },
+				    extras:{
+				      
+				    },
+				    createNew:false,
+				    show:{
+				      autoShow:true,
+				    },
+				    waiting:{
+				      autoShow:true,
+				      title:'正在加载...',
+				      options:{
+				      	
+				      }
+				    }
+				})
+			}
+		</script>
+	</body>
+
+</html>

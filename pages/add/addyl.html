@@ -1,0 +1,450 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>新增</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<style>
+			html , body{
+				background: #fff;
+			}
+			.FloatRight{
+				float: right;
+				color: #dd524d;
+				font-weight: bold;
+			}
+			.mui-content{
+				background: #fff !important;
+			}
+			.TextAlign_left{
+				text-align: left;
+			}
+			.Margin_T0{
+				margin: 10px;
+			}
+			.ColumnBar{
+				padding-top: 10px;
+				padding-bottom: 10px;
+				border-top: 1px solid #efefef;
+				border-bottom: 0px solid #efefef;
+				font-size: 12px;
+				font-weight: bold;
+				text-align: left;
+			}
+			.ColumnBar_B{
+				padding-top: 10px;
+				padding-bottom: 10px;
+				border-top: 0px solid #efefef;
+				border-bottom: 1px solid #efefef;
+				font-size: 12px;
+				font-weight: bold;
+				text-align: left;
+			}
+			input{
+				width: 100%;
+				padding: 0 5px;
+				font-size: 12px;
+				border-radius: 0 !important;
+				border: 0px !important;
+				border-bottom: 1px solid #333 !important;
+			}
+			select{
+				width: 100%;
+				font-size: 12px;
+				padding: 0;
+				margin-top: 0;
+			}
+			.recordItem{
+				padding: 0 5px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 12px;
+			}
+			.record{
+				width: 100%;
+				display: block;
+				overflow: hidden;
+			}
+			.mui-table-view:before{
+				height: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <div class="mui-row Margin_T0">
+		    	<!--<div class="mui-col-xs-6 ">
+		    		<input type="date" id="addDate"	
+                             required value="2018-05-25">
+		    	</div>-->
+		        <div class="mui-col-xs-12 ">
+		        	<span id="addOneWage" class="mui-icon mui-icon-plus FloatRight"></span>
+		        </div>
+		    </div>
+		</div>
+		<div class="mui-content">
+		    <div class="mui-row ColumnBar Margin_T0">
+		        <div class="mui-col-sm-2 mui-col-xs-2 ">
+		            	单号
+		        </div>
+		        <div class="mui-col-sm-2 mui-col-xs-2 ">
+		        		平方
+		        </div>
+		        <div class="mui-col-sm-2 mui-col-xs-2 ">
+		            	工序
+		        </div>
+		        <div class="mui-col-sm-2 mui-col-xs-2 ">
+		            	单价
+		        </div>
+		        <div class="mui-col-sm-2 mui-col-xs-2 ">
+		            	工资额
+		        </div>
+		    </div>
+		</div>
+		<!--列表1-->
+		<form name="wage" method="post">
+			<div class="mui-content">
+			    <div class="mui-row">
+			        <ul id="content" class="mui-table-view">
+			        </ul>
+			    </div>
+			</div>
+			<div class="mui-content">
+			    <div class="mui-row">
+			        <ul class="mui-table-view">
+			        	<li>
+			        		<div class="mui-row  recordItem">
+				        		<div class="mui-col-sm-6 mui-col-xs-6 ">
+							            <span>合计</span>
+							    </div>
+				        		<div class="mui-col-sm-6 mui-col-xs-6 ">
+							            <output name="sum_T" class="sum_T">00.00</output>
+							    </div>
+						    </div>
+			        	</li>
+			        </ul>
+			    </div>
+			</div>
+			
+		</form>
+		<div class="mui-content">
+		    <div class="mui-row ColumnBar_B Margin_T0">
+		        <div class="mui-col-sm-6 mui-col-xs-6 ">
+		            	姓名
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 ">
+		        		工资
+		        </div>
+		    </div>
+		</div>
+		 <!--列表2-->
+		 <form name="employee">
+			<div class="mui-content">
+			    <div class="mui-row">
+			        <ul id="content_employee" class="mui-table-view">
+			        	
+			        </ul>
+			    </div>
+			</div>
+			<div class="mui-content">
+			    <div class="mui-row">
+			        <ul class="mui-table-view">
+			        	<li>
+			        		<div class="mui-row  recordItem">
+				        		<div class="mui-col-sm-6 mui-col-xs-6 ">
+							            <span>合计</span>
+							    </div>
+				        		<div class="mui-col-sm-6 mui-col-xs-6 ">
+							            <output name="sum_B" class="sum_B">00.00</output>
+							    </div>
+						    </div>
+			        	</li>
+			        </ul>
+			    </div>
+			</div>
+			
+		</form>
+		<div class="mui-content-padded">
+			<!--<input type="submit" value="保存">-->
+			<button id='save' class="mui-btn mui-btn-block mui-btn-primary">保存</button>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var Url = 'http://205.168.1.112:8082/';
+			var GongXuListHtml = '';
+			var employeeHtml = '';
+			var GongxuMathList = []
+			
+			var DATA =[]
+			var salaryEmployee = []
+			var addOneWage = document.getElementById('addOneWage');
+			var wageForm = document.forms.wage,
+				priceShow = document.getElementsByClassName('priceShow'),
+				acreageFields = document.getElementsByClassName('acreage'),
+				algorithmFields = document.getElementsByClassName('algorithm'),
+		        totalFields = document.getElementsByClassName('item_total'),
+		        deleteFields = document.getElementsByClassName('delete');
+		        employeeWageFields = document.getElementsByClassName('employee_wage');
+			var qtyListeners = function() {
+		      var i = 0,
+		          ln = algorithmFields.length;
+		      for(;i<ln;i++) {
+		      	acreageFields[i].addEventListener('input',calculateTotals, false);
+		      	acreageFields[i].addEventListener('keyup',calculateTotals, false);
+		      	//algorithmFields[i].addEventListener('change',changePrice, false);
+		      	deleteFields[i].addEventListener('tap',deleteOne, false);
+//		      	employeeWageFields[i].addEventListener('input',changeEmployeeWage, false);
+//		      	employeeWageFields[i].addEventListener('keyup',changeEmployeeWage, false);
+		      }
+		    };
+			
+			var GetGongXu = function(){
+                mui.get(Url + 'gongxuMath?fdepartId='+window.localStorage.getItem('departmentId'),{},function(data){
+						GongxuMathList = data.gongxuMathList
+						data.gongxuMathList.map(function(Item,Idx){
+		            		GongXuListHtml += '<option  value='+ Item.gongxu_price+' data-algorithmid='+ Item.id +'>'+ Item.gongxu_name+ '</option>'
+		            	})
+					},'json'
+				);
+				//渲染员工列表
+				mui.post(Url + 'empolyeeList',{
+					'departId':window.localStorage.getItem('departmentId')
+				},function(data){
+						data.empolyeeList.map(function(Item,Idx){
+							var EmployeeObj = {}
+							EmployeeObj.femployeeName = Item.realname
+							EmployeeObj.id = Item.id
+		            		employeeHtml += '<li class="record">'+
+								        		'<div class="mui-row  recordItem">'+
+											        '<div class="mui-col-sm-6 mui-col-xs-6 ">'+
+											            '<span class="employee_name" data-id='+ Item.id+'>'+ Item.realname+'</span>'+
+											        '</div>'+
+											        '<div class="mui-col-sm-6 mui-col-xs-6 ">'+
+											        		'<input type="number" name="employee_wage" onchange="changeEmployeeWage('+ Idx +')" class="employee_wage" placeholder="" data-idx='+ Idx+' data-price="0"/>'+
+											        '</div>'+
+											    '</div>'+
+								        	'</li>'
+			        		salaryEmployee.push(EmployeeObj)
+		            	})
+						
+						$('#content_employee').append(employeeHtml)
+						
+					},'json'
+				);
+				
+			}
+			GetGongXu()
+			
+		    //保存
+		    save.addEventListener('tap',function(){
+		    	var RealArray = []
+		    	
+		    	DATA.map(function(Item,Idx){
+//		    		if(Item){
+//		    			Item
+//		    		}
+		    		if(Item.del){
+		    			RealArray.push(Item)	
+		    		}
+		 })
+		    	
+//		    	var Data = {
+//		    		'GxSalary':$('.sum_T')[0].innerHTML,
+//		    		'EmployeeSalary':$('.sum_B')[0].innerHTML,
+//		    		'fdepartId':window.localStorage.getItem('departmentId'),
+//					'salarySqare':RealArray,
+//					'salaryEmployee':salaryEmployee
+//		    	}
+		    	var Data = {}
+		    		Data.GxSalary=$('.sum_T')[0].innerHTML
+		    		Data.EmployeeSalary=$('.sum_B')[0].innerHTML
+		    		Data.fdepartId=window.localStorage.getItem('departmentId')
+					Data.salarySqare=RealArray
+					Data.salaryEmployee=salaryEmployee
+					
+		    	mui.ajax(Url + 'insertGongXu',{
+					data:Data,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/json'},	              
+					success:function(data){
+						
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(type);
+					}
+				});
+		    })
+			//添加按钮
+			addOneWage.addEventListener('tap', function(event) {
+				var NewHtml = ''
+				NewHtml = NewHtml + '<li class="record">'+
+			        		'<div class="mui-row  recordItem">'+
+						        '<div class="mui-col-sm-2 mui-col-xs-2 ">'+
+						            '<span class="orderNo"></span>'+
+						        '</div>'+
+						        '<div class="mui-col-sm-2 mui-col-xs-2 ">'+
+						        		'<input name="acreage" class="acreage" placeholder="面积" data-algorithmid='+ GongxuMathList[0].id +' data-price='+ GongxuMathList[0].gongxu_price + '/>'+
+						        '</div>'+
+						        '<div class="mui-col-sm-2 mui-col-xs-2 ">'+
+						            '<select name="algorithm" class="algorithm" onchange="changePrice()">'+
+						            	GongXuListHtml +
+			                        '</select>'+
+						        '</div>'+
+						        '<div class="mui-col-sm-2 mui-col-xs-2 ">'+
+						            '<span class="priceShow">' + GongxuMathList[0].gongxu_price +'</span>'+
+						        '</div>'+
+						        '<div class="mui-col-sm-2 mui-col-xs-2 ">'+
+						            '<output name="item_total" class="item_total">00.00</output>'+	
+						        '</div>'+
+						        '<div class="mui-col-sm-2 mui-col-xs-2 ">'+
+						            '<span class="delete" data-idx=' + DATA.length + '>删除</span>'+
+						        '</div>'+
+						    '</div>'+
+			        	'</li>'
+				$('#content').append(NewHtml)
+				AutoOrderNo()
+				wageForm = document.forms.wage,
+				priceShow = document.getElementsByClassName('priceShow'),
+				acreageFields = document.getElementsByClassName('acreage'),
+				algorithmFields = document.getElementsByClassName('algorithm'),
+		        totalFields = document.getElementsByClassName('item_total'),
+		        deleteFields = document.getElementsByClassName('delete');
+		        employeeWageFields = document.getElementsByClassName('employee_wage');
+		        qtyListeners();
+			})
+			
+		    //金额格式化
+		    var formatMoney = function(value) {
+		    	return value
+//		      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    }
+		    //更新Summary_T
+		    var UpdateSummary_T = function(){
+		    	var Summary_T = 0
+		    	DATA.map(function(Item,Idx){
+		    		if(Item.del){
+		    			Summary_T+=	parseFloat(Item.famount)
+		    		}
+		    	})
+		    	$('.sum_T')[0].innerHTML =Summary_T
+		    	
+		    }
+		    //更新Summary_B
+		    var UpdateSummary_B = function(){
+		    	var Summary_B = 0.00
+		    	salaryEmployee.map(function(Item,Idx){
+		    		if(Item.famount != '' && Item.famount){
+		    			Summary_B+=	parseFloat(Item.famount)
+		    		}
+		    	})
+		    	$('.sum_B')[0].innerHTML =Summary_B
+		    }
+		    //计算具体金额
+		    var calculateTotals = function(){
+		    	var i = 0,
+			        ln = algorithmFields.length,
+			        temArea = 0,
+			        temPrice = 0.00,
+			        itemTotal = 0.00,
+//			        sumTotal = 0.00,
+			        sumTotalMoney = 0.00;
+				for(;i<ln;i++) {
+			        if(!!acreageFields[i].valueAsNumber) {
+			          itemArea = acreageFields[i].valueAsNumber || 0;
+			          DATA[i].sqare = acreageFields[i].valueAsNumber || 0;
+			        } else {
+			          itemArea = parseFloat(acreageFields[i].value) || 0;
+			          DATA[i].sqare = parseFloat(acreageFields[i].value) || 0;
+			        }
+			        if(!!acreageFields[i].dataset) {
+			          itemPrice = parseFloat(acreageFields[i].dataset.price);
+			          DATA[i].gongxuId = acreageFields[i].dataset.algorithmid;
+			          DATA[i].price = parseFloat(acreageFields[i].dataset.price);
+			        } else {
+			          itemPrice = parseFloat(acreageFields[i].getAttribute('data-price'));
+			          DATA[i].gongxuId = acreageFields[i].getAttribute('data-algorithmid');
+			          DATA[i].price = parseFloat(acreageFields[i].getAttribute('data-price'));
+			        }
+			        itemTotal = itemArea *itemPrice;
+			        DATA[i].famount = itemArea *itemPrice;
+			        itemTotalMoney = '¥'+formatMoney(itemTotal.toFixed(2));
+//			        sumTotal +=itemTotal;
+//			        sumTotalMoney = '$'+formatMoney(sumTotal.toFixed(2));
+			
+			        if(!!totalFields[i].value) {
+			          totalFields[i].value =itemTotalMoney;
+			          //$('.sum')[0].innerHTML =sumTotalMoney;
+			        } else {
+			          totalFields[i].innerHTML =itemTotalMoney;
+			          //$('.sum')[0].innerHTML =sumTotalMoney;
+			        }
+			    }
+				UpdateSummary_T()
+		    }
+		    //修改工序/单价
+		    var changePrice = function(){
+		    	var i = 0,
+			        ln = algorithmFields.length;
+			    for(;i<ln;i++) {
+			    	acreageFields[i].setAttribute('data-price',algorithmFields[i].value)
+			    	priceShow[i].innerHTML = parseFloat(algorithmFields[i].value)
+			    	ChangeAlgorithmId(i,algorithmFields[i].value)
+			    }
+			    calculateTotals()
+		    }
+		    //记录工序id
+		    var ChangeAlgorithmId =  function(Index,Price){
+		    	GongxuMathList.map(function(Item,Idx){
+		    		if(Item.gongxu_price == Price){
+		    			acreageFields[Index].setAttribute('data-algorithmid',Item.id);
+		    		}
+		    	})
+		    }
+		    
+		    //自动生成单号
+		    var AutoOrderNo = function(){
+		    	var IDX = DATA.length;
+		    	var n = '0000' + IDX;
+  				n = n.substr(n.length-5,5);
+				var Obj = {}
+				Obj.fnumber = '' + n,
+				Obj.sqare = '',
+				Obj.price = 0.00,
+				Obj.famount = 0.00,
+				Obj.gongxuId = GongxuMathList[0].id
+				Obj.del = true
+				DATA.push(Obj)
+				$('.orderNo')[IDX].innerHTML = '' + n
+		    }
+		    
+		    //删除一条
+		    var deleteOne = function(e){
+		    	var DelIDX = e.target.dataset.idx
+		    	$('.record').eq(DelIDX).hide()
+		    	DATA[DelIDX].del = false
+		    	UpdateSummary_T()
+		    }
+		    
+		    //填写员工工资
+		    var changeEmployeeWage = function(IDX){
+		    	console.log(IDX)
+		    	console.log(employeeWageFields)
+		    	salaryEmployee[IDX].famount = parseFloat(employeeWageFields[IDX].value)
+		    	UpdateSummary_B()
+		    }
+		    
+		    
+
+		</script>
+	</body>
+
+</html>

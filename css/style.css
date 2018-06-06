@@ -1,0 +1,56 @@
+.ui-page-login,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+.mui-content{height: 100%;}
+.tabBar{
+	width: 100%;
+	height: 42px;
+	line-height: 42px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	z-index: 999;
+	margin-top: 20px;
+}
+.FloatRight{
+	float: right;
+	color: #dd524d;
+	font-weight: bold;
+}
+.TextAlign_Right{
+	text-align: right !important;
+}
+.TextAlign_Left{
+	text-align: left !important;
+}
+.ColorRed{
+	color: red;
+}
+.mui-toast-container {
+    bottom: 50% !important;
+}
+.mui-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 998;
+    background-color: rgba(0,0,0,.2);
+}
+.emptyList{
+	margin: 20px 0;
+	text-align: center;
+	background: #efeff4 !important;
+	border: 0px;
+	padding: 0 !important;
+	color: #999;
+}

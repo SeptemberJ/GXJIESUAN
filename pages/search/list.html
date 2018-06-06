@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查询</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			#refreshContainer{
+				margin-bottom: 50px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		    <ul class="mui-table-view mui-table-view-chevron">
+		    	<li class="mui-table-view-cell" onclick="ToDetail()">Item 1</li>
+			    
+		    </ul>
+		  </div>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+			  pullRefresh : {
+			    container:"#refreshContainer",
+			    down : {
+			    	style:'circle',
+			       //callback :pulldownRefresh 
+			    }
+			  }
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					mui.toast("为你推荐了5篇文章");
+				}, 1500);
+			}
+			var ToDetail = function(){
+				mui.openWindow({
+				    url:'../detail/index.html',
+				    id:'detail/index.html',
+				    styles:{
+				     
+				    },
+				    extras:{
+				      
+				    },
+				    createNew:false,
+				    show:{
+				      autoShow:true,
+				    },
+				    waiting:{
+				      autoShow:true,
+				      title:'正在加载...',
+				      options:{
+				      	
+				      }
+				    }
+				})
+			}
+		</script>
+	</body>
+
+</html>

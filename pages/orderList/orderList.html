@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			#refreshContainer{
+				margin-bottom: 50px;
+			}
+			.RecordList{
+				font-size: 14px;
+			}
+			.mui-table-view-chevron .mui-table-view-cell{
+				padding-right:15px ;
+			}
+			/*.mui-table-view{
+				background: transparent !important;
+			}*/
+			.mui-table-view:before{
+				height: 0 !important;
+			}
+			.mui-table-view:after{
+				height: 0 !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		    <ul class="mui-table-view mui-table-view-chevron RecordList">
+		    </ul>
+		  </div>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var Url = 'http://220.248.107.62:8086/gxJK/'
+//			var Url = 'http://http://205.168.1.112:8082/'
+			var OrderList = []
+			var formatTime = function(date) {
+				var year = date.getFullYear()
+				var month = date.getMonth() + 1
+				var day = date.getDate()
+				
+				var hour = date.getHours()
+				var minute = date.getMinutes()
+				var second = date.getSeconds()
+				
+				return [year, month, day].map(formatNumber).join('-') + '/' + [hour, minute, second].map(formatNumber).join(':')
+			}
+			var formatNumber = function(n) {
+				n = n.toString()
+				return n[1] ? n : '0' + n
+			}
+			var ReLogin = function(){
+				mui.openWindow({
+				    url:'../../index.html',
+				    id:'index.html',
+				})
+			}
+			var GetOrderList = function(){
+					var OrderListHtml = ''
+					mui.get(Url + 'orderList',{},function(data){
+							OrderList = data.employeeList
+							if(data.employeeList.length <= 0){
+								OrderListHtml = '<h4 class="emptyList">暂无订单</h4>'
+							}else{
+								data.employeeList.map(function(Item,Idx){
+			            		OrderListHtml += '<li class="mui-table-view-cell" onclick="ToModifyOrder( '+ Idx +')">'+
+					            		'<div class="mui-row  recordItem">'+
+									        '<div class="mui-col-sm-12 mui-col-xs-12 ">'+
+									            '<span>'+ (Idx + 1) + '.  单号: '+ Item.order_no +'</span>'+
+									        '</div>'+
+//									        '<div class="mui-col-sm-8 mui-col-xs-8 TextAlign_Right">'+
+//									        	'<span>'+ Item.order_no +'</span>'+
+//									        '</div>'+
+									    '</div>'+
+				            		'</li>'
+				            	})
+							}
+							$('.RecordList').append(OrderListHtml)
+						},'json'
+					);
+			}
+			GetOrderList()
+			
+			//去添加订单
+			var ToModifyOrder = function(Idx){
+			    console.info(OrderList[Idx]);
+				window.localStorage.setItem('orderId',OrderList[Idx].order_no);
+                window.localStorage.setItem('orderDetail',JSON.stringify(OrderList[Idx]));
+                // window.localStorage.setItem('startTime',(formatTime(new Date(SalaryList[IDX].fdate.time))).substr(0,10));
+                // window.localStorage.setItem('endTime',(formatTime(new Date(SalaryList[IDX].fdate.time))).substr(0,10));
+
+                mui.openWindow({
+					    url:'../addOrder/index.html',
+					    id:'addOrder/index.html',
+					})
+			}
+			
+//			mui.init({
+//			  pullRefresh : {
+//			    container:"#refreshContainer",
+//			    down : {
+//			    	style:'circle',
+//			    	callback :pulldownRefresh
+//			    }
+//			  }
+//			});
+//			/**
+//			 * 下拉刷新具体业务实现
+//			 */
+//			function pulldownRefresh() {
+//				setTimeout(function() {
+//					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+//					mui.toast("刷新完毕");
+//				}, 1500);
+//			}
+		</script>
+	</body>
+
+</html>

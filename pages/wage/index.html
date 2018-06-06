@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>工资列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">列表</h1>
+			<span id="addOneRecord" class="mui-icon mui-icon-plus FloatRight"></span>
+		</header>
+		<footer class="tabBar">
+			<div class="mui-content" style="height: 100%;background: #007aff;">
+			    <div class="mui-row">
+			        <div class="mui-col-sm-12 mui-col-xs-12 " onclick="GoDepartment()">
+			            	切换部门
+			        </div>
+			        <!--<div class="mui-col-sm-6 mui-col-xs-6 " onclick="GoSearch()">
+			        		查询
+			        </div>-->
+			    </div>
+		   </div>
+		</footer>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+			    subpages:[{
+			      url:'list.html',
+			      id:'list.html',
+			      styles:{
+			        top:'45px',
+			        bottom:'0px'
+			      }
+			    }],
+			});
+			
+			var addOneRecord = document.getElementById('addOneRecord');
+			//新增记录
+			addOneRecord.addEventListener('tap', function(event) {
+				mui.openWindow({
+					    url:'../add/index.html',
+					    id:'add/index.html',
+					    styles:{
+					     
+					    },
+					    extras:{
+					      
+					    },
+					    createNew:false,
+					    show:{
+					      autoShow:true,
+					    },
+					    waiting:{
+					      autoShow:true,
+					      title:'正在加载...',
+					    }
+					})
+			})
+			//去部门列表
+			var GoDepartment = function(){
+				mui.openWindow({
+				    url:'../department/index.html',
+				    id:'department/index.html',
+				    styles:{
+				     
+				    },
+				    extras:{
+				      
+				    },
+				    createNew:false,
+				    show:{
+				      autoShow:true,
+				    },
+				    waiting:{
+				      autoShow:true,
+				      title:'正在加载...',
+				      options:{
+				      	
+				      }
+				    }
+				})
+			}
+			//去查询
+			var GoSearch =function(){
+				mui.openWindow({
+				    url:'../search/index.html',
+				    id:'search/index.html',
+				    styles:{
+				     
+				    },
+				    extras:{
+				      
+				    },
+				    createNew:false,
+				    show:{
+				      autoShow:true,
+				    },
+				    waiting:{
+				      autoShow:true,
+				      title:'正在加载...',
+				      options:{
+				      	
+				      }
+				    }
+				})
+			}
+		</script>
+	</body>
+
+</html>

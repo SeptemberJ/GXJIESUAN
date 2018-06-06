@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>工序流转</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../../js/common.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			html , body{
+				background: #fff;
+			}
+			.mui-content{
+				background: #fff !important;
+			}
+			.OrderItem{
+				padding: 10px;
+				border-top: 0px solid #efefef;
+				border-bottom: 0px solid #efefef;
+				font-size: 12px;
+				font-weight: bold;
+				text-align: left;
+			}
+			.OrderItem input{
+				width: 100%;
+				padding: 5px !important;
+				font-size: 12px;
+				border-radius: 0 !important;
+				border: 0px !important;
+				border-bottom: 1px solid #333 !important;
+			}
+			select{
+				
+				width: 100%;
+				font-size: 12px;
+				padding: 0;
+				margin-top: 0;
+				-webkit-appearance: menulist;
+			    box-sizing: border-box;
+			    align-items: center;
+			    white-space: pre;
+			    -webkit-rtl-ordering: logical;
+			    color: black;
+			    background-color: white;
+			    cursor: default;
+			    border-width: 1px;
+			    border-style: solid;
+			    border-color: initial;
+			    border-image: initial;
+			}
+		</style>
+		<script type="text/javascript">
+	
+	</script>
+		<script type="text/javascript">
+var ws=null,wo=null;
+// H5 plus事件处理
+function plusReady(){
+	if(ws||!window.plus||!domready){
+		return;
+	}
+	// 获取窗口对象
+	ws=plus.webview.currentWebview();
+	wo=ws.opener();
+	// 开始扫描
+	ws.addEventListener('show', function(){
+		scan=new plus.barcode.Barcode('bcid');
+	    scan.onmarked=onmarked;
+	    scan.start({conserve:true,filename:'_doc/barcode/'});
+	}, false);
+	// 显示页面并关闭等待框
+    ws.show('pop-in');
+    wo.evalJS('closeWaiting()');
+}
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener('plusready', plusReady, false);
+}
+// 监听DOMContentLoaded事件
+document.addEventListener('DOMContentLoaded', function(){
+	domready=true;
+	plusReady();
+}, false);
+// 二维码扫描成功
+function onmarked(type, result, file){
+    switch(type){
+    	case plus.barcode.QR:
+    	type = 'QR';
+    	break;
+    	case plus.barcode.EAN13:
+    	type = 'EAN13';
+    	break;
+    	case plus.barcode.EAN8:
+    	type = 'EAN8';
+    	break;
+    	default:
+    	type = '其它'+type;
+    	break;
+    }
+    result = result.replace(/\n/g, '');
+    wo.evalJS("scaned('"+ type +"','"+ result +"','"+ file +"');");
+    back();
+}
+// 从相册中选择二维码图片 
+function scanPicture(){
+	mui.init()
+	document.addEventListener('plusready',function () {
+		 plus.gallery.pick(function(path){
+	    plus.barcode.scan(path,onmarked,function(error){
+			plus.nativeUI.alert('无法识别此图片');
+		});
+    }, function(err){
+        console.log('Failed: '+err.message);
+    });
+		
+    },false);
+   
+}
+		
+		
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <div class="mui-row OrderItem">
+		        <div class="mui-col-sm-4 mui-col-xs-4 ">
+		            	<span>单号</span>
+		        </div>
+		        <div class="mui-col-sm-8 mui-col-xs-8 ">
+		            	<input placeholder="请输入订单号" />
+		        </div>
+		    </div>
+		    <div class="mui-row OrderItem">
+		        <div class="mui-col-sm-4 mui-col-xs-4 ">
+		            	<span>描述</span>
+		        </div>
+		        <div class="mui-col-sm-8 mui-col-xs-8 ">
+		            	<input placeholder="请输入描述" />
+		        </div>
+		    </div>
+		    <div class="mui-row OrderItem">
+		        <div class="mui-col-sm-4 mui-col-xs-4 ">
+		            	<span>压贴</span>
+		        </div>
+		        <div class="mui-col-sm-8 mui-col-xs-8 ">
+	            	<select name="yatie" class="yatie">
+	            		<option value="压贴1">压贴1</option>
+	            		<option value="压贴2">压贴2</option>
+	            		<option value="压贴3">压贴3</option>
+	            	</select>
+		        </div>
+		    </div>
+		    <div class="mui-row OrderItem">
+		        <div class="mui-col-sm-4 mui-col-xs-4 ">
+		            	<span>成型</span>
+		        </div>
+		        <div class="mui-col-sm-8 mui-col-xs-8 ">
+	            	<select name="yatie" class="yatie">
+	            		<option value="成型1">成型1</option>
+	            		<option value="成型2">成型2</option>
+	            		<option value="成型3">成型3</option>
+	            	</select>
+		        </div>
+		    </div>
+		    <div class="mui-row OrderItem">
+		        <div class="mui-col-sm-4 mui-col-xs-4 ">
+		            	<span>手工</span>
+		        </div>
+		        <div class="mui-col-sm-8 mui-col-xs-8 ">
+	            	<select name="yatie" class="yatie">
+	            		<option value="手工1">手工1</option>
+	            		<option value="手工2">压手工2</option>
+	            		<option value="手工3">手工3</option>
+	            	</select>
+		        </div>
+		    </div>
+		    <div class="mui-row OrderItem">
+		        <div class="mui-col-sm-4 mui-col-xs-4 ">
+		            	<span>数量</span>
+		        </div>
+		        <div class="mui-col-sm-8 mui-col-xs-8 ">
+		            	<input placeholder="请输入数量" />
+		        </div>
+		    </div>
+		    <div class="mui-content-padded">
+				<button id='save' class="mui-btn mui-btn-block mui-btn-primary">保存</button>
+			</div>
+		</div>
+		<footer>
+			<div class="fbt" onclick="back()">取　 消</div>
+			<div class="fbt" onclick="scanPicture()">从相册选择二维码111</div>
+		</footer>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+//			mui.init();
+		</script>
+	</body>
+
+</html>
