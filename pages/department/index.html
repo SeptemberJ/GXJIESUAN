@@ -19,19 +19,6 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">部门列表</h1>
 		</header>
-		<!--<footer class="tabBar">
-			<div class="mui-content" style="height: 100%;background: #63B8FF;">
-			    <div class="mui-row">
-			        <div class="mui-col-sm-6 mui-col-xs-6 " onclick="GoDepartment()">
-			            	部门
-			        </div>
-			        <div class="mui-col-sm-6 mui-col-xs-6 " onclick="GoSearch()">
-			        		查询
-			        </div>
-			    </div>
-		   </div>
-		</footer>-->
-		
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
@@ -48,46 +35,6 @@
 				mui.openWindow({
 				    url:'../department/index.html',
 				    id:'department/index.html',
-				    styles:{
-				     
-				    },
-				    extras:{
-				      
-				    },
-				    createNew:false,
-				    show:{
-				      autoShow:true,
-				    },
-				    waiting:{
-				      autoShow:true,
-				      title:'正在加载...',
-				      options:{
-				      	
-				      }
-				    }
-				})
-			}
-			var GoSearch =function(){
-				mui.openWindow({
-				    url:'../search/index.html',
-				    id:'search/index.html',
-				    styles:{
-				     
-				    },
-				    extras:{
-				      
-				    },
-				    createNew:false,
-				    show:{
-				      autoShow:true,
-				    },
-				    waiting:{
-				      autoShow:true,
-				      title:'正在加载...',
-				      options:{
-				      	
-				      }
-				    }
 				})
 			}
 		</script>

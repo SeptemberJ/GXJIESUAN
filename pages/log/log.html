@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查询</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			#refreshContainer{
+				margin-bottom: 50px;
+			}
+			.LogContent{
+				font-size: 12px;
+			}
+			.mui-table-view-chevron .mui-table-view-cell{
+				padding-right: 10px !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		    <ul class="mui-table-view mui-table-view-chevron LogContent">
+			    
+		    </ul>
+		  </div>
+		</div>
+		<script src="../../js/utils.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var LogList = [];
+			var ReLogin = function(){
+				mui.openWindow({
+				    url:'../../index.html',
+				    id:'index.html',
+				})
+			};
+			var GetLogs = function(){
+				var LogListHtml = ''
+				if(window.localStorage.getItem('recordId')){
+					mui.get(Url + 'salaryLogList?fsalaryId='+window.localStorage.getItem('recordId'),{},function(data){
+						LogList = data.salaryLogList,
+						data.salaryLogList.map(function(Item,Idx){
+			            		LogListHtml += '<li class="mui-table-view-cell" onclick="ToModifyOrder( '+ Idx +')">'+
+					            		'<div class="mui-row  recordItem">'+
+									        '<div class="mui-col-sm-4 mui-col-xs-4 ">'+
+									            '<span>'+ (Idx + 1) + '.' + Item.departname +'</span>'+
+									        '</div>'+
+									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
+									        	'<span>'+ Item.realname +'</span>'+
+									        '</div>'+
+									        '<div class="mui-col-sm-6 mui-col-xs-6 TextAlign_Right">'+
+									        	'<span>'+ formatTimeAll(new Date(Item.fdate.time)) +'</span>'+
+									        '</div>'+
+									    '</div>'+
+				            		'</li>'
+				            	})
+							
+							$('.LogContent').append(LogListHtml)
+					},'json');
+				}else{
+					mui.alert( '请重新登录!', '提示', function(e){
+						ReLogin()
+					})
+				}
+			};
+			GetLogs();
+		</script>
+	</body>
+
+</html>

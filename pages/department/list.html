@@ -24,17 +24,16 @@
 		  </div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.js"></script>
 		<script type="text/javascript">
 			mui.init()
-			var Url = 'http://220.248.107.62:8086/gxJK/'
-//			var Url = 'http://http://205.168.1.112:8082/'
 			var departmentList = []
 			var ReLogin = function(){
 				mui.openWindow({
 					    url:'../../index.html',
 					    id:'index.html',
 					})
-			}
+			};
 			var GetDepartment = function(){
 				if(window.localStorage.getItem('userid')){
 					mui.get(Url + 'depart',{'userid':window.localStorage.getItem('userid')},function(data){
@@ -52,16 +51,15 @@
 					})
 					
 				}
-				
-			}
-			GetDepartment()
+			};
+			GetDepartment();
 			var ToChoose = function(IDX){
 				window.localStorage.setItem('departmentId',departmentList[IDX].ID);
 				mui.openWindow({
 				    url:'../choose/index.html',
 				    id:'choose/index.html',
 				})
-			}
+			};
 			
 		</script>
 	</body>

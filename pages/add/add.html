@@ -7,7 +7,6 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
-		<script src="../../js/jquery-3.3.1.min.js"></script>
 		<style>
 			html , body{
 				background: #fff;
@@ -124,11 +123,7 @@
 
 	<body>
 		<div class="mui-content" style="width:100%;height:30px;line-height:30px;background:'#fff';position: fixed;top: 0px;right: 0;z-index:999; box-shadow: 0px 2px 2px #888888;">
-		    <div class="mui-row Margin_T0">
-		    	<!--<div class="mui-col-xs-6 ">
-		    		<input type="date" id="addDate"	
-                             required value="2018-05-25">
-		    	</div>-->
+		    <div class="mui-row">
 		        <div class="mui-col-xs-12 ">
 		        	<span id="addOneWage" class="mui-icon mui-icon-plus FloatRight"></span>
 		        </div>
@@ -220,16 +215,15 @@
 			
 		</form>
 		<div class="mui-content-padded">
-			<!--<input type="submit" value="保存">-->
 			<button id='save' class="mui-btn mui-btn-block mui-btn-primary">保存</button>
 		</div>
 		
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.js"></script>
+		<script src="../../js/jquery-3.3.1.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			var mask = mui.createMask();
-			var Url = 'http://220.248.107.62:8086/gxJK/'
-//			var Url = 'http://http://205.168.1.112:8082/'
 			var GongXuListHtml = ''
 			var employeeHtml = ''
 			var GongxuMathList = []
@@ -252,8 +246,7 @@
 		      	acreageFields[i].addEventListener('keyup',calculateTotals, false);
 		      	deleteFields[i].addEventListener('tap',deleteOne, false);
 		      }
-		    };
-			
+		   };
 			var GetGongXu = function(){
 				mui.get(Url + 'gongxuMath?fdepartId='+window.localStorage.getItem('departmentId'),{},function(data){
 						GongxuMathList = data.gongxuMathList
@@ -262,6 +255,7 @@
 		            	})
 					},'json'
 				);
+				
 				//渲染员工列表
 				mui.post(Url + 'empolyeeList',{
 					'departId':window.localStorage.getItem('departmentId')
@@ -288,12 +282,17 @@
 						
 					},'json'
 				);
-				
 			}
 			GetGongXu()
 			
 		    //保存
 		    save.addEventListener('tap',function(){
+		    	var ReLogin = function(){
+					mui.openWindow({
+					    url:'../../index.html',
+					    id:'index.html',
+					})
+				}
 		    	var RealArray = []
 		    	DATA.map(function(Item,Idx){
 		    		if(Item.del){
@@ -310,23 +309,16 @@
                     }
                     newSalary.push(val);
                 });
-
 		    	var Data = {
+		    		'userid':window.localStorage.getItem('userid'),
 		    		'GxSalary':$('.sum_T')[0].innerHTML,
 		    		'EmployeeSalary':$('.sum_B')[0].innerHTML,
 		    		'fdepartId':window.localStorage.getItem('departmentId'),
 					'salarySqare':RealArray,
 					'salaryEmployee':newSalary
 		    	}
-		    	var ReLogin = function(){
-					mui.openWindow({
-					    url:'../../index.html',
-					    id:'index.html',
-					})
-				}
-		    	
 		    	var ConfirmSave = function(){
-		    		if(window.localStorage.getItem('departmentId')){
+		    		if(window.localStorage.getItem('departmentId') && window.localStorage.getItem('userid')){
 		    			mask.show()
 			    		mui.ajax(Url + 'insertGongXu',{
 							data:Data,
@@ -378,9 +370,7 @@
 			//添加
 			addOneWage.addEventListener('tap', function(event) {
 				if(GongxuMathList.length == 0){
-					mui.alert( '工序为空无法新增!', '提示', function(e){
-							
-						})
+					mui.alert( '工序为空无法新增!', '提示', function(e){})
 					return false
 				}
 				var NewHtml = ''
@@ -419,13 +409,14 @@
 		        deleteFields = document.getElementsByClassName('delete');
 		        employeeWageFields = document.getElementsByClassName('employee_wage');
 		        qtyListeners();
-			})
+			});
 			
 		    //金额格式化
 		    var formatMoney = function(value) {
 		    	return value
-//		      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    }
+//		      	return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    };
+		    
 		    //更新Summary_T
 		    var UpdateSummary_T = function(){
 		    	var Summary_T = 0
@@ -435,8 +426,8 @@
 		    		}
 		    	})
 		    	$('.sum_T')[0].innerHTML =Summary_T.toFixed(2)
-		    	
-		    }
+		    };
+		    
 		    //更新Summary_B
 		    var UpdateSummary_B = function(){
 		    	var Summary_B = 0.00
@@ -446,7 +437,8 @@
 		    		}
 		    	})
 		    	$('.sum_B')[0].innerHTML =Summary_B.toFixed(2)
-		    }
+		    };
+		    
 		    //计算具体金额
 		    var calculateTotals = function(){
 		    	var i = 0,
@@ -454,7 +446,6 @@
 			        temArea = 0,
 			        temPrice = 0.00,
 			        itemTotal = 0.00,
-//			        sumTotal = 0.00,
 			        sumTotalMoney = 0.00;
 				for(;i<ln;i++) {
 			        if(!!acreageFields[i].valueAsNumber) {
@@ -484,7 +475,8 @@
 			        }
 			    }
 				UpdateSummary_T()
-		    }
+		    };
+		    
 		    //修改工序/单价
 		    var changePrice = function(){
 		    	var i = 0,
@@ -495,7 +487,8 @@
 			    	ChangeAlgorithmId(i,algorithmFields[i].value)
 			    }
 			    calculateTotals()
-		    }
+		    };
+		    
 		    //记录工序id
 		    var ChangeAlgorithmId =  function(Index,Price){
 		    	GongxuMathList.map(function(Item,Idx){
@@ -503,7 +496,7 @@
 		    			acreageFields[Index].setAttribute('data-algorithmid',Item.id);
 		    		}
 		    	})
-		    }
+		    };
 		    
 		    //自动生成单号
 		    var AutoOrderNo = function(){
@@ -519,7 +512,7 @@
 				Obj.del = true
 				DATA.push(Obj)
 				$('.orderNo')[IDX].innerHTML = '' + n
-		    }
+		    };
 		    
 		    //删除一条
 		    var deleteOne = function(e){
@@ -527,7 +520,7 @@
 		    	$('.record').eq(DelIDX).hide()
 		    	DATA[DelIDX].del = false
 		    	UpdateSummary_T()
-		    }
+		    };
 		    
 		    //填写员工工资
 		    var changeEmployeeWage = function(IDX){
@@ -535,7 +528,7 @@
 		    	console.log(employeeWageFields)
 		    	salaryEmployee[IDX].famount = parseFloat(employeeWageFields[IDX].value)
 		    	UpdateSummary_B()
-		    }
+		    };
 		    
 
 		</script>

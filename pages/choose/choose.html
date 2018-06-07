@@ -36,10 +36,9 @@
 			
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.js"></script>
 		<script type="text/javascript">
 			mui.init()
-			var Url = 'http://220.248.107.62:8086/gxJK/'
-//			var Url = 'http://http://205.168.1.112:8082/'
 			var departmentList = []
 			var ReLogin = function(){
 				mui.openWindow({
@@ -48,7 +47,6 @@
 					})
 			}
 			var ToOrder = function(IDX){
-				//window.localStorage.setItem('departmentId',departmentList[IDX].ID);
 				mui.openWindow({
 				    url:'../orderList/index.html',
 				    id:'orderList/index.html',

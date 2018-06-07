@@ -97,11 +97,6 @@
 					<label>密码</label>
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 				</div>
-				<!--<div class="mui-input-row">
-					<label>部门</label>
-					<select class="department" name="department">
-	                </select>
-				</div>-->
 			</form>
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
@@ -114,22 +109,9 @@
 		
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
+		<script src="../../js/utils.js"></script>
 		<script>
-			var Url = 'http://220.248.107.62:8086/gxJK/'
-//			var Url = 'http://http://205.168.1.112:8082/'
 			var mask = mui.createMask();
-			var GetDepartment = function(){
-				mui.get(Url + 'depart',{},function(data){
-					var TempDepartmentHtml = ''
-					data.departList.map(function(Item,Idx){
-						TempDepartmentHtml += '<option value=' + Item.id + '>'+ Item.departname +'</option>'
-					})
-					$('.department').append(TempDepartmentHtml)
-					},'json'
-				);
-			}
-			GetDepartment()
-			
 			var loginButton = document.getElementById('login');
 			var accountBox = document.getElementById('account');
 			var passwordBox = document.getElementById('password');
@@ -153,31 +135,15 @@
 						}
 					},'json'
 				);
+				
 				var ToDepartment = function(){
 					setTimeout(function(){
 						mui.openWindow({
 						    url:'../department/index.html',
 						    id:'department/index.html',
-						    styles:{
-						     
-						    },
-						    extras:{
-						      
-						    },
-						    createNew:false,
-						    show:{
-						      autoShow:true,
-						    },
-						    waiting:{
-						      autoShow:true,
-						      title:'正在加载...',
-						      options:{
-						      	
-						      }
-						    }
 						})
 					},1500)
-				}
+				};
 				
 			});
 		</script>

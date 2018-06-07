@@ -35,6 +35,14 @@
             font-weight: bold;
             text-align: center;
         }
+        .ColumnBar_Top{
+            padding:10px;
+            border-top: 0px solid #efefef;
+            border-bottom: 0px solid #efefef;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: left;
+        }
         select{
             width: auto !important;
         }
@@ -104,7 +112,7 @@
 <body>
 
 <div class="mui-content">
-    <div class="mui-row ColumnBar Margin_T0">
+    <div class="mui-row ColumnBar">
         <div class="mui-col-sm-4 mui-col-xs-3 ">
             订单号
         </div>
@@ -117,7 +125,7 @@
 
     </div>
 
-    <div class="mui-row ColumnBar Margin_T0">
+    <div class="mui-row ColumnBar_Top">
         <div class="mui-col-sm-4 mui-col-xs-4 ">
             <span id="orderId"></span>
         </div>
@@ -149,7 +157,7 @@
         </div>
 
     </div>
-    <div class="mui-row ColumnBar Margin_T0">
+    <!--<div class="mui-row ColumnBar Margin_T0">
         <div class="mui-col-sm-6 mui-col-xs-6 ">
             成型开工日期：<span id="cx_begin_time"></span>
         </div>
@@ -157,7 +165,24 @@
         <div class="mui-col-sm-6 mui-col-xs-6 ">
             成型完工日期：<span id="cx_end_time"></span>
         </div>
+    </div>-->
+    <div class="mui-row ColumnBar Margin_T0">
+        <div class="mui-col-sm-6 mui-col-xs-6 ">
+            成型车间一组开工日期：<span id="cx_begin_time"></span>
+        </div>
 
+        <div class="mui-col-sm-6 mui-col-xs-6 ">
+            成型车间一组完工日期：<span id="cx_end_time"></span>
+        </div>
+    </div>
+    <div class="mui-row ColumnBar Margin_T0">
+        <div class="mui-col-sm-6 mui-col-xs-6 ">
+            成型车间二组开工日期：<span id="cx2_begin_time"></span>
+        </div>
+
+        <div class="mui-col-sm-6 mui-col-xs-6 ">
+            成型车间二组完工日期：<span id="cx2_end_time"></span>
+        </div>
     </div>
     <div class="mui-row ColumnBar Margin_T0">
         <div class="mui-col-sm-6 mui-col-xs-6 ">
@@ -243,6 +268,48 @@
             <span id="chengxing-status"></span>
         </div>
         <div class="mui-col-sm-1 mui-col-xs-1 ">
+            成型车间一组
+        </div>
+        <div class="mui-col-sm-2 mui-col-xs-2 ">
+            <span id="chengxing" hidden></span>
+            <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none" onclick="inputNum(this,'成型车间一组')">输入数量</button>
+            <span></span>
+        </div>
+
+        <div class="mui-col-sm-3 mui-col-xs-3 ">
+            <input id="chengxing-startTime" type="text" disabled placeholder="开工日期">
+        </div>
+        <div class="mui-col-sm-1 mui-col-xs-1 "></div>
+        <div class="mui-col-sm-3 mui-col-xs-3 ">
+            <input id="chengxing-endTime" type="text" disabled placeholder="完工日期">
+        </div>
+    </div>
+    <div class="mui-row ColumnBar Margin_T0">
+        <div class="mui-col-sm-2 mui-col-xs-2 ">
+            <span id="chengxing2-status"></span>
+        </div>
+        <div class="mui-col-sm-1 mui-col-xs-1 ">
+            成型车间二组
+        </div>
+        <div class="mui-col-sm-2 mui-col-xs-2 ">
+            <span id="chengxing2" hidden></span>
+            <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none" onclick="inputNum(this,'成型车间二组')">输入数量</button>
+            <span></span>
+        </div>
+
+        <div class="mui-col-sm-3 mui-col-xs-3 ">
+            <input id="chengxing2-startTime" type="text" disabled placeholder="开工日期">
+        </div>
+        <div class="mui-col-sm-1 mui-col-xs-1 "></div>
+        <div class="mui-col-sm-3 mui-col-xs-3 ">
+            <input id="chengxing2-endTime" type="text" disabled placeholder="完工日期">
+        </div>
+    </div>
+    <!--<div class="mui-row ColumnBar Margin_T0">
+        <div class="mui-col-sm-2 mui-col-xs-2 ">
+            <span id="chengxing-status"></span>
+        </div>
+        <div class="mui-col-sm-1 mui-col-xs-1 ">
             成型
         </div>
         <div class="mui-col-sm-2 mui-col-xs-2 ">
@@ -258,9 +325,7 @@
         <div class="mui-col-sm-3 mui-col-xs-3 ">
             <input id="chengxing-endTime" type="text" disabled placeholder="完工日期">
         </div>
-
-
-    </div>
+    </div>-->
     <div class="mui-row ColumnBar Margin_T0">
         <div class="mui-col-sm-2 mui-col-xs-2 ">
             <span id="mugong-status"></span>
@@ -330,6 +395,7 @@
 
 
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.js"></script>
 <script>
 
     var cuurDept = 6;
@@ -337,6 +403,8 @@
     var yatie = "8a8a8aa863b038a00163b143e2ac0006";
     //成型
     var chengxu = "8a8a8aa863b038a00163b14684470010";
+    var chengxing = '8a8a8aa863b708ad0163b8f7d3130011';
+    var chengxing2 = '8a8a8aa863b708ad0163b8f9ed5e0014';
     //木工
     var mugong = "8a8a8aa863b038a00163b146e9b30012";
     //油漆
@@ -344,7 +412,8 @@
     //包装
     var baozhuang = "8a8a8aa863b9ebbc0163bb713304021d";
 
-    var Url = 'http://220.248.107.62:8086/gxJK/';
+    //var Url = 'http://220.248.107.62:8086/gxJK/';
+    
     var departmentId;
     $(function () {
         if(!window.localStorage.getItem('departmentId')){
@@ -364,6 +433,8 @@
         $("#yt_end_time").text(formatDateTime(orderDetailData.yt_end_time.time));
         $("#cx_begin_time").text(formatDateTime(orderDetailData.cx_begin_time.time));
         $("#cx_end_time").text(formatDateTime(orderDetailData.cx_end_time.time));
+        $("#cx2_begin_time").text(formatDateTime(orderDetailData.cx2_begin_time.time));
+        $("#cx2_end_time").text(formatDateTime(orderDetailData.cx2_end_time.time));
         $("#mg_begin_time").text(formatDateTime(orderDetailData.mg_begin_time.time));
         $("#mg_end_time").text(formatDateTime(orderDetailData.mg_end_time.time));
         $("#yq_begin_time").text(formatDateTime(orderDetailData.yq_begin_time.time));
@@ -395,9 +466,14 @@
                     $("#yatie-status").text(getStatus(data.fstatus));
                     if(data.fstatus==0){
                         $("#btnOpenWork").html("开工");
-                    }else if(data.fstatus==1){
+                    }else{
                         $("#btnOpenWork").html("已开工");
                     }
+//                  if(data.fstatus==0){
+//                      $("#btnOpenWork").html("开工");
+//                  }else if(data.fstatus==1){
+//                      $("#btnOpenWork").html("已开工");
+//                  }
 
                     if(data.fnumber>0){
                         $("#yatie").next().hide();
@@ -410,7 +486,7 @@
                         $("#yatie-endTime").val(formatDateTime(data.fendtime.time));
                     }
 
-                }else if(data.gongxu=="成型"){
+                }else if(data.gongxu=="成型一组"){
                     $("#chengxing").html(data.id);
                     if(data.fstatus==3){
                         $("#chengxing-status").css("color","#F00");
@@ -427,6 +503,25 @@
                     }
                     if(data.fendtime){
                         $("#chengxing-endTime").val(formatDateTime(data.fendtime.time));
+                    }
+
+                }else if(data.gongxu=="成型二组"){
+                    $("#chengxing2").html(data.id);
+                    if(data.fstatus==3){
+                        $("#chengxing2-status").css("color","#F00");
+                    }else if(data.fstatus==2){
+                        $("#chengxing2-status").css("color","#0F0");
+                    }
+                    $("#chengxing2-status").text(getStatus(data.fstatus));
+                    if(data.fnumber>0){
+                        $("#chengxing2").next().hide();
+                        $("#chengxing2").next().next().text(data.fnumber);
+                    }
+                    if(data.ftime){
+                        $("#chengxing2-startTime").val(formatDateTime(data.ftime.time));
+                    }
+                    if(data.fendtime){
+                        $("#chengxing2-endTime").val(formatDateTime(data.fendtime.time));
                     }
 
                 }else if(data.gongxu=="木工"){
@@ -503,9 +598,17 @@
             if($("#yatie-status").text()=="开工"){
                 $("#yatie").next().show();
             }
-        }else if(departmentId==mugong){
+        }else if(departmentId==chengxing){
+            if($("#yatie-status").text()=="开工"){
+                $("#yatie").next().show();
+            }
+        }else if(departmentId==chengxing2){
             if($("#chengxing-status").text()=="开工"){
                 $("#chengxing").next().show();
+            }
+        }else if(departmentId==mugong){
+            if($("#chengxing2-status").text()=="开工"){
+                $("#chengxing2").next().show();
             }
         }else if(departmentId==youqi){
             if($("#mugong-status").text()=="开工"){
@@ -537,8 +640,12 @@
                 var status = nowTime.getTime()>orderDetailData.yt_end_time.time?3:2;
                 updateDetail($(ele).prev().text(),data.value,status);
                 updateOpenWork($("#chengxing").text(),1);
-            }else if(name=="成型"){
+            }else if(name=="成型车间一组"){
                 var status = nowTime.getTime()>orderDetailData.cx_end_time.time?3:2;
+                updateDetail($(ele).prev().text(),data.value,status);
+                updateOpenWork($("#chengxing2").text(),1);
+            }else if(name=="成型车间二组"){
+                var status = nowTime.getTime()>orderDetailData.cx2_end_time.time?3:2;
                 updateDetail($(ele).prev().text(),data.value,status);
                 updateOpenWork($("#mugong").text(),1);
             }else if(name=="木工"){
@@ -613,123 +720,10 @@
         var second = date.getSeconds();
         minute = minute < 10 ? ('0' + minute) : minute;
         second = second < 10 ? ('0' + second) : second;
-        return y + '-' + m + '-' + d+" "+h+":"+minute;
+        return y + '-' + m + '-' + d  //+" "+h+":"+minute;
     };
 
-
 </script>
-<!--<script>-->
-    <!--//这段代 主要是获取摄像头的视频流并显示在Video 签中-->
-    <!--var canvas=null,context=null,video=null;-->
-    <!--window.addEventListener("DOMContentLoaded", function ()-->
-    <!--{-->
-        <!--try{-->
-            <!--canvas = document.getElementById("canvas");-->
-            <!--context = canvas.getContext("2d");-->
-            <!--video = document.getElementById("video");-->
-
-            <!--var videoObj = { "video": true,audio:false},-->
-                <!--flag=true,-->
-                <!--MediaErr = function (error)-->
-                <!--{-->
-                    <!--flag=false;-->
-                    <!--if (error.PERMISSION_DENIED)-->
-                    <!--{-->
-                        <!--alert('用户拒绝了浏览器请求媒体的权限', '提示');-->
-                    <!--} else if (error.NOT_SUPPORTED_ERROR) {-->
-                        <!--alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器', '提示');-->
-                    <!--} else if (error.MANDATORY_UNSATISFIED_ERROR) {-->
-                        <!--alert('指定的媒体类型未接收到媒体流', '提示');-->
-                    <!--} else {-->
-                        <!--alert('系统未能获取到摄像头，请确保摄像头已正确安装。或尝试刷新页面，重试', '提示');-->
-                    <!--}-->
-                <!--};-->
-            <!--//获取媒体的兼容代码，目前只支持（Firefox,Chrome,Opera）-->
-            <!--if (navigator.getUserMedia)-->
-            <!--{-->
-                <!--//qq浏览器不支持-->
-                <!--if (navigator.userAgent.indexOf('MQQBrowser') > -1) {-->
-                    <!--alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器', '提示');-->
-                    <!--return false;-->
-                <!--}-->
-                <!--navigator.getUserMedia(videoObj, function (stream) {-->
-                    <!--video.src = stream;-->
-                    <!--video.play();-->
-                <!--}, MediaErr);-->
-            <!--}-->
-            <!--else if(navigator.webkitGetUserMedia)-->
-            <!--{-->
-                <!--navigator.webkitGetUserMedia(videoObj, function (stream)-->
-                <!--{-->
-                    <!--video.src = window.webkitURL.createObjectURL(stream);-->
-                    <!--video.play();-->
-                <!--}, MediaErr);-->
-            <!--}-->
-            <!--else if (navigator.mozGetUserMedia)-->
-            <!--{-->
-                <!--navigator.mozGetUserMedia(videoObj, function (stream) {-->
-                    <!--video.src = window.URL.createObjectURL(stream);-->
-                    <!--video.play();-->
-                <!--}, MediaErr);-->
-            <!--}-->
-            <!--else if (navigator.msGetUserMedia)-->
-            <!--{-->
-                <!--navigator.msGetUserMedia(videoObj, function (stream) {-->
-                    <!--$(document).scrollTop($(window).height());-->
-                    <!--video.src = window.URL.createObjectURL(stream);-->
-                    <!--video.play();-->
-                <!--}, MediaErr);-->
-            <!--}else{-->
-                <!--alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器');-->
-                <!--return false;-->
-            <!--}-->
-            <!--if(flag){-->
-                <!--alert('为了获得更准确的测试结果，请尽量将二维码置于框中，然后进行拍摄、扫描。 请确保浏览器有权限使用摄像功能');-->
-            <!--}-->
-            <!--//这个是拍照按钮的事件，-->
-            <!--$("#snap").click(function () {startPat();}).show();-->
-        <!--}catch(e){-->
-            <!--printHtml("浏览器不支持HTML5 CANVAS");-->
-        <!--}-->
-    <!--}, false);-->
-
-    <!--//打印内容到页面-->
-    <!--function printHtml(content){-->
-        <!--$(window.document.body).append(content+"<br/>");-->
-    <!--}-->
-    <!--//开始拍照-->
-    <!--function startPat(){-->
-        <!--setTimeout(function(){//防止调用过快-->
-            <!--if(context)-->
-            <!--{-->
-                <!--context.drawImage(video, 0, 0, 320, 320);-->
-                <!--CatchCode();-->
-            <!--}-->
-        <!--},200);-->
-    <!--}-->
-    <!--//抓屏获取图像流，并上传到服务器-->
-    <!--function CatchCode() {-->
-        <!--if(canvas!=null)-->
-        <!--{-->
-            <!--//以下开始编 数据-->
-            <!--var imgData = canvas.toDataURL();-->
-            <!--//将图像转换为base64数据-->
-            <!--var base64Data = imgData;//.substr(22); //在前端截取22位之后的字符串作为图像数据-->
-            <!--//开始异步上-->
-            <!--$.post("saveimg.php", { "img": base64Data },function (result)-->
-            <!--{-->
-                <!--printHtml("解析结果："+result.data);-->
-                <!--if (result.status == "success" && result.data!="")-->
-                <!--{-->
-                    <!--printHtml("解析结果成功！");-->
-                <!--}else{-->
-                    <!--startPat();//如果没有解析出来则重新抓拍解析-->
-                <!--}-->
-            <!--},"json");-->
-        <!--}-->
-    <!--}-->
-<!--</script>-->
-
 </body>
 
 </html>

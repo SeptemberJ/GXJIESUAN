@@ -5,7 +5,10 @@
 		<title>工资列表</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+		</style>
 	</head>
 
 	<body>
@@ -19,96 +22,42 @@
 			        <div class="mui-col-sm-12 mui-col-xs-12 " onclick="GoDepartment()">
 			            	切换部门
 			        </div>
-			        <!--<div class="mui-col-sm-6 mui-col-xs-6 " onclick="GoSearch()">
-			        		查询
-			        </div>-->
 			    </div>
 		   </div>
 		</footer>
-		
+		<script src="../../js/utils.js"></script>
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init({
-			    subpages:[{
-			      url:'list.html',
-			      id:'list.html',
-			      styles:{
-			        top:'45px',
-			        bottom:'0px'
-			      }
-			    }],
-			});
-			
-			var addOneRecord = document.getElementById('addOneRecord');
-			//新增记录
-			addOneRecord.addEventListener('tap', function(event) {
-				mui.openWindow({
-					    url:'../add/index.html',
-					    id:'add/index.html',
-					    styles:{
-					     
-					    },
-					    extras:{
-					      
-					    },
-					    createNew:false,
-					    show:{
-					      autoShow:true,
-					    },
-					    waiting:{
-					      autoShow:true,
-					      title:'正在加载...',
-					    }
+		<script src="../../js/mui.picker.min.js"></script>
+		<script>
+			(function($) {
+				$.init({
+				    subpages:[{
+				      url:'list.html',
+				      id:'list.html',
+				      styles:{
+				        top:'42px',
+				        bottom:'0px'
+				      }
+				    }],
+				});
+				
+				//新增记录
+				$('#addOneRecord')[0].addEventListener('tap', function(event) {
+					mui.openWindow({
+						    url:'../add/index.html',
+						    id:'add/index.html',
+						})
+				});
+				
+				//去部门列表
+				var GoDepartment = function(){
+					mui.openWindow({
+					    url:'../department/index.html',
+					    id:'department/index.html',
 					})
-			})
-			//去部门列表
-			var GoDepartment = function(){
-				mui.openWindow({
-				    url:'../department/index.html',
-				    id:'department/index.html',
-				    styles:{
-				     
-				    },
-				    extras:{
-				      
-				    },
-				    createNew:false,
-				    show:{
-				      autoShow:true,
-				    },
-				    waiting:{
-				      autoShow:true,
-				      title:'正在加载...',
-				      options:{
-				      	
-				      }
-				    }
-				})
-			}
-			//去查询
-			var GoSearch =function(){
-				mui.openWindow({
-				    url:'../search/index.html',
-				    id:'search/index.html',
-				    styles:{
-				     
-				    },
-				    extras:{
-				      
-				    },
-				    createNew:false,
-				    show:{
-				      autoShow:true,
-				    },
-				    waiting:{
-				      autoShow:true,
-				      title:'正在加载...',
-				      options:{
-				      	
-				      }
-				    }
-				})
-			}
+				};
+				
+			})(mui);
 		</script>
 	</body>
 

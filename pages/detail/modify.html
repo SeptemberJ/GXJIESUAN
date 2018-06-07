@@ -18,8 +18,9 @@
 				font-weight: bold;
 			}
 			#addOneWage{
-				height: 20px;
-				margin-top: 5px;
+				height: 30px;
+				margin-top: 10px;
+				margin-right: 10px;
 			}
 			.delete{
 				color: #dd524d;
@@ -35,7 +36,7 @@
 				margin: 10px;
 			}
 			.ColumnBar{
-				margin-top: 42px;
+				margin-top: 50px;
 				padding-top: 10px;
 				padding-bottom: 10px;
 				border-top: 0px solid #efefef;
@@ -120,13 +121,12 @@
 	</head>
 
 	<body>
-		<div class="mui-content" style="width:100%;height:30px;line-height:30px;background:'#fff';position: fixed;top: 0px;right: 0;z-index:999; box-shadow: 0px 2px 2px #888888;">
-		    <div class="mui-row Margin_T0">
-		    	<!--<div class="mui-col-xs-6 ">
-		    		<input type="date" id="addDate"	
-                             required value="2018-05-25">
-		    	</div>-->
-		        <div class="mui-col-xs-12 ">
+		<div class="mui-content" style="width:100%;height:50px;line-height:50px;background:'#fff';position: fixed;top: 0px;right: 0;z-index:999; box-shadow: 0px 2px 2px #888888;">
+		    <div class="mui-row">
+		    	<div class="mui-col-xs-6 ">
+		    		 <span style="font-size: 12px;margin-left: 10px;" onclick="LookLog()">查看日志</span>
+		    	</div>
+		        <div class="mui-col-xs-6 ">
 		        	<span id="addOneWage" class="mui-icon mui-icon-plus FloatRight"></span>
 		        </div>
 		    </div>
@@ -184,7 +184,7 @@
 			</div
 		</div>
 		<div class="mui-content">
-		    <div class="mui-row ColumnBar_B Margin_T0">
+		    <div class="mui-row ColumnBar_B">
 		        <div class="mui-col-sm-6 mui-col-xs-6 ">
 		            	姓名
 		        </div>
@@ -225,11 +225,10 @@
 		</div>
 		
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			var mask = mui.createMask();
-			var Url = 'http://220.248.107.62:8086/gxJK/'
-//			var Url = 'http://http://205.168.1.112:8082/'
 			var LimitType = ''
 			var GongXuListHtml = '';
 			var employeeHtml = '';
@@ -265,7 +264,7 @@
 		    		}
 		    	})
 		    	return ChoosedPrice
-		    }
+		    };
 		    var CalculateAlgorithmValue =  function(GongXuId){
 		    	var ChoosedValue = 0
 		    	GongxuMathList.map(function(Item,Idx){
@@ -274,7 +273,7 @@
 		    		}
 		    	})
 		    	return ChoosedValue
-		    }
+		    };
 			
 			var GetGongXu = function(){
 				//新增时option string html
@@ -363,14 +362,14 @@
 					},'json'
 				);
 				
-				qtyListeners()
-			}
-			GetGongXu()
+				qtyListeners();
+			};
+			GetGongXu();
 			
 			var formatMoney = function(value) {
 				return value
-//		      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    }
+//		      	return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		   };
 		    
 		    var calculateTotals = function(){
 		    	var i = 0,
@@ -410,22 +409,18 @@
 			          //orderTotalField.innerHTML =orderTotalMoney;
 			        }
 			    }
-		    }
+		   };
 		    
-		    
-			
-			
 		    //保存
 		    save.addEventListener('tap',function(){
 		    	var RealArray = []
-		    	
 		    	DATA.map(function(Item,Idx){
 		    		if(!Item.del){
 		    			RealArray.push(Item)	
 		    		}
 		 		})
-		    
 		    	var Data = {
+		    		userid:window.localStorage.getItem('userid'),
 		    		id: window.localStorage.getItem('recordId'),
 		    		GxSalary: $('.sum_T')[0].innerHTML,
 		    		EmployeeSalary: $('.sum_B')[0].innerHTML,
@@ -439,9 +434,8 @@
 					    id:'index.html',
 					})
 				}
-		    	
 				var ConfirmSave = function(){
-					if(window.localStorage.getItem('departmentId') && window.localStorage.getItem('recordId')){
+					if(window.localStorage.getItem('departmentId') && window.localStorage.getItem('recordId') && window.localStorage.getItem('userid')){
 						mask.show()
 						mui.ajax(Url + 'updateGongXu',{
 							data:Data,
@@ -490,7 +484,7 @@
 		    	}else{
 		    		return false
 		    	}
-		    })
+		    });
 		    
 		    //添加按钮
 			addOneWage.addEventListener('tap', function(event) {
@@ -531,9 +525,8 @@
 		        deleteFields = document.getElementsByClassName('delete');
 		        employeeWageFields = document.getElementsByClassName('employee_wage');
 		        qtyListeners();
-			})
+			});
 			
-		    
 		    //更新Summary_T
 		    var UpdateSummary_T = function(){
 		    	var Summary_T = 0.00
@@ -544,7 +537,7 @@
 		    	})
 		    	$('.sum_T')[0].innerHTML =Summary_T.toFixed(2)
 		    	
-		    }
+		    };
 		    //更新Summary_B
 		    var UpdateSummary_B = function(){
 		    	var Summary_B = 0.00
@@ -554,7 +547,8 @@
 		    		}
 		    	})
 		    	$('.sum_B')[0].innerHTML =Summary_B.toFixed(2)
-		    }
+		    };
+		    
 		    //修改工序/单价
 		    var GetDefaultPrice = function(){
 		    	var i = 0,
@@ -564,7 +558,8 @@
 			    	priceShow[i].innerHTML = '¥ ' + parseFloat(algorithmFields[i].value).toFixed(2)
 			    	ChangeAlgorithmId(i,algorithmFields[i].value)
 			    }
-		    }
+		    };
+		    
 		    //修改工序/单价
 		    var changePrice = function(){
 		    	var i = 0,
@@ -575,7 +570,8 @@
 			    	ChangeAlgorithmId(i,algorithmFields[i].value)
 			    }
 			    calculateTotals()
-		    }
+		    };
+		    
 		    var calculateTotals2 = function(){
 		    	changePrice()
 		    	var i = 0,
@@ -612,7 +608,7 @@
 			        }
 			    }
 				UpdateSummary_T()
-		    }
+		    };
 		    
 		    //计算具体金额
 		    var calculateTotals = function(){
@@ -656,7 +652,7 @@
 			        }
 			    }
 				UpdateSummary_T()
-		    }
+		    };
 		    
 		    //记录工序id
 		    var ChangeAlgorithmId =  function(Index,Price){
@@ -665,7 +661,7 @@
 		    			acreageFields[Index].setAttribute('data-algorithmid',Item.id);
 		    		}
 		    	})
-		    }
+		    };
 		    
 		    //自动生成单号
 		    var AutoOrderNo = function(){
@@ -682,7 +678,7 @@
 				DATA.push(Obj)
 				$('.orderNo')[IDX].innerHTML = '' + n
 				console.log(DATA)
-		    }
+		    };
 		    
 		    //删除一条
 		    var deleteOne = function(IDX){
@@ -690,17 +686,21 @@
 		    	$('.record').eq(DelIDX).hide()
 		    	DATA[DelIDX].del = true
 		    	UpdateSummary_T()
-		    }
+		    };
 		    
 		    //填写员工工资
 		    var changeEmployeeWage = function(IDX){
 		    	salaryEmployee[IDX].famount = parseFloat(employeeWageFields[IDX].value)
 		    	UpdateSummary_B()
-		    }
+		    };
 		    
-		    
-		    
-
+		    //查询修改日志
+		    var LookLog = function(){
+		    	mui.openWindow({
+				    url:'../log/index.html',
+				    id:'log/ndex.html',
+				})
+		    };
 		</script>
 	</body>
 
