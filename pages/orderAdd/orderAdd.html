@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新增订单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+	</head>
+	<style>
+		html , body , .mui-content{
+				background: #fff;
+			}
+		.OrderItem{
+			padding: 10px;
+		}
+		.LableSpan{
+			width: 100%;
+			margin-bottom: 5px;
+			display: block;
+			font-size: 12px;
+		}
+		input{
+			width: auto;
+			padding: 5px 0 !important;
+			font-size: 12px;
+			border-radius: 0 !important;
+			border: 0px !important;
+			border-bottom: 1px solid #333 !important;
+			}
+	</style>
+	<body>
+		<div class="mui-content">
+		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">订单号</span>
+				    <input id="order_number"/>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">数量</span>
+				    <input id="order_amount"/>
+		        </div>
+		    </div>
+		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">压贴开工日期</span>
+				    <input id="order_yt_s"/>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">压贴完工日期</span>
+				    <input id="order_yt_e"/>
+		        </div>
+		    </div>
+		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">成型一组开工日期</span>
+				    <input id="order_cx_s"/>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">成型一组完工日期</span>
+				    <input id="order_cx_e"/>
+		        </div>
+		    </div>
+		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">成型二组开工日期</span>
+				    <input id="order_cx2_s"/>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">成型二组完工日期</span>
+				    <input id="order_cx2_e"/>
+		        </div>
+		    </div>
+		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">木工开工日期</span>
+				    <input id="order_mg_s"/>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">木工完工日期</span>
+				    <input id="order_mg_e"/>
+		        </div>
+		    </div>
+		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">油漆开工日期</span>
+				    <input id="order_yq_s"/>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">油漆完工日期<span>
+				    <input id="order_yq_e"/>
+		        </div>
+		    </div>
+		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">包装开工日期</span>
+				    <input id="order_bz_s"/>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">包装完工日期</span>
+				    <input id="order_bz_e"/>
+		        </div>
+		    </div>
+		    <div class="mui-row">
+		        <div class="mui-col-sm-12 mui-col-xs-12 OrderItem">
+		            <span class="LableSpan">订单描述</span>
+				    <textarea id="order_note" rows="3"></textarea>
+		        </div>
+		    </div>
+		</div>
+		<div class="mui-content-padded">
+			<button id='save' class="mui-btn mui-btn-block mui-btn-primary">保存</button>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript">
+			(function($) {
+				$.init();
+				//var ArrayTemp = ['order_yt_s','order_yt_e','order_cx_s','order_cx_e','order_cx2_s','order_cx2_e','order_mg_s','order_mg_e','order_yq_s','order_yq_e','order_bz_s','order_bz_e'];
+				
+				//yt
+				$('#order_yt_s')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_yt_s')[0].value = selectItems.value
+				    })
+				});
+				$('#order_yt_e')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_yt_e')[0].value = selectItems.value
+				    })
+				});
+				//cx
+				$('#order_cx_s')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_cx_s')[0].value = selectItems.value
+				    })
+				});
+				$('#order_cx_e')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_cx_e')[0].value = selectItems.value
+				    })
+				});
+				//cx2
+				$('#order_cx2_s')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_cx2_s')[0].value = selectItems.value
+				    })
+				});
+				$('#order_cx2_e')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_cx2_e')[0].value = selectItems.value
+				    })
+				});
+				//mg
+				$('#order_mg_s')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_mg_s')[0].value = selectItems.value
+				    })
+				});
+				$('#order_mg_e')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_mg_e')[0].value = selectItems.value
+				    })
+				});
+				//yq
+				$('#order_yq_s')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_yq_s')[0].value = selectItems.value
+				    })
+				});
+				$('#order_yq_e')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_yq_e')[0].value = selectItems.value
+				    })
+				});
+				//bz
+				$('#order_bz_s')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_bz_s')[0].value = selectItems.value
+				    })
+				});
+				$('#order_bz_e')[0].addEventListener('tap', function(event) {
+					var dtPicker = new mui.DtPicker({"type": "date",}); 
+				    dtPicker.show(function (selectItems) { 
+				    	$('#order_bz_e')[0].value = selectItems.value
+				    })
+				});
+				$("#save")[0].addEventListener('tap', function(event) {
+					var OrderData = {
+						"order_no": $("#order_number")[0].value,
+						"order_describe": $("#order_note")[0].value,
+						"fnumber": $("#order_amount")[0].value,
+						"yt_begin_time": $('#order_yt_s')[0].value,
+						"yt_end_time": $('#order_yt_e')[0].value,
+						"fstatus": 0,
+						"cx_begin_time": $('#order_cx_s')[0].value,
+						"cx_end_time": $('#order_yt_e')[0].value,
+						"begin_time": "2018-06-08",
+						"end_time": "2018-06-08",
+						"mg_begin_time": $('#order_mg_s')[0].value,
+						"mg_end_time": $('#order_mg_e')[0].value,
+						"yq_begin_time": $('#order_yq_s')[0].value,
+						"yq_end_time": $('#order_yq_e')[0].value,
+						"bz_begin_time": $('#order_bz_s')[0].value,
+						"bz_end_time": $('#order_bz_e')[0].value,
+						"cx2_begin_time": $('#order_cx2_s')[0].value,
+						"cx2_end_time": $('#order_cx2_e')[0].value,
+					}
+					console.log(OrderData)
+				});
+			})(mui);
+		</script>
+	</body>
+</html>

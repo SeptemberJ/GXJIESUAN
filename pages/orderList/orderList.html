@@ -74,14 +74,14 @@
 			
 			GetOrderList();
 			
-			//去添加订单
+			//去修开工
 			var ToModifyOrder = function(Idx){
 			    console.info(OrderList[Idx]);
 				window.localStorage.setItem('orderId',OrderList[Idx].order_no);
                 window.localStorage.setItem('orderDetail',JSON.stringify(OrderList[Idx]));
                 mui.openWindow({
-					    url:'../addOrder/index.html',
-					    id:'addOrder/index.html',
+					    url:'../operation/index.html',
+					    id:'operation/index.html',
 					})
 			};
 			
