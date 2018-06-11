@@ -88,9 +88,13 @@
 				    <input id="order_yq_s"/>
 		        </div>
 		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
-		            <span class="LableSpan">油漆完工日期<span>
+		            <span class="LableSpan">油漆完工日期</span>
 				    <input id="order_yq_e"/>
 		        </div>
+		        <!--<div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+		            <span class="LableSpan">油漆完工日期<span>
+				    <input id="order_yq_e"/>
+		        </div>-->
 		    </div>
 		    <div class="mui-row">
 		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
@@ -119,8 +123,7 @@
 		<script type="text/javascript">
 			(function($) {
 				$.init();
-				//var ArrayTemp = ['order_yt_s','order_yt_e','order_cx_s','order_cx_e','order_cx2_s','order_cx2_e','order_mg_s','order_mg_e','order_yq_s','order_yq_e','order_bz_s','order_bz_e'];
-				
+				var mask = mui.createMask();
 				//yt
 				$('#order_yt_s')[0].addEventListener('tap', function(event) {
 					var dtPicker = new mui.DtPicker({"type": "date",}); 
@@ -200,6 +203,67 @@
 				    })
 				});
 				$("#save")[0].addEventListener('tap', function(event) {
+					//校验
+					if($("#order_number")[0].value.trim() == '' || $("#order_number")[0].value.trim() == 'undefined'){
+			    		mui.alert( '请先填写订单号!', '提示')
+						return false
+			    	}
+					if($("#order_amount")[0].value.trim() == '' || $("#order_amount")[0].value.trim() == 'undefined'){
+			    		mui.alert( '请先填写订单数量!', '提示')
+						return false
+			    	}
+					if($("#order_yt_s")[0].value == '' || $("#order_yt_s")[0].value == 'undefined'){
+			    		mui.alert( '请先选择压贴开工日期!', '提示')
+						return false
+			    	}
+					if($("#order_yt_e")[0].value == '' || $("#order_yt_e")[0].value == 'undefined'){
+			    		mui.alert( '请先选择压贴完工日期!', '提示')
+						return false
+			    	}
+					if($("#order_cx_s")[0].value == '' || $("#order_cx_s")[0].value == 'undefined'){
+			    		mui.alert( '请先选择成型一组开工日期!', '提示')
+						return false
+			    	}
+					if($("#order_cx_e")[0].value == '' || $("#order_cx_e")[0].value == 'undefined'){
+			    		mui.alert( '请先选择成型一组完工日期!', '提示')
+						return false
+			    	}
+					if($("#order_cx_s")[0].value == '' || $("#order_cx_s")[0].value == 'undefined'){
+			    		mui.alert( '请先选择成型二组开工日期!', '提示')
+						return false
+			    	}
+					if($("#order_cx2_e")[0].value == '' || $("#order_cx2_e")[0].value == 'undefined'){
+			    		mui.alert( '请先选择成型二组完工日期!', '提示')
+						return false
+			    	}
+					if($("#order_mg_s")[0].value == '' || $("#order_mg_s")[0].value == 'undefined'){
+			    		mui.alert( '请先选择木工开工日期!', '提示')
+						return false
+			    	}
+					if($("#order_mg_e")[0].value == '' || $("#order_mg_e")[0].value == 'undefined'){
+			    		mui.alert( '请先选择木工完工日期!', '提示')
+						return false
+			    	}
+					if($("#order_yq_s")[0].value == '' || $("#order_yq_s")[0].value == 'undefined'){
+			    		mui.alert( '请先选择油漆开工日期!', '提示')
+						return false
+			    	}
+					if($("#order_yq_e")[0].value == '' || $("#order_yq_e")[0].value == 'undefined'){
+			    		mui.alert( '请先选择油漆完工日期!', '提示')
+						return false
+			    	}
+					if($("#order_bz_s")[0].value == '' || $("#order_bz_s")[0].value == 'undefined'){
+			    		mui.alert( '请先选择包装开工日期!', '提示')
+						return false
+			    	}
+					if($("#order_bz_e")[0].value == '' || $("#order_bz_e")[0].value == 'undefined'){
+			    		mui.alert( '请先选择包装完工日期!', '提示')
+						return false
+			    	}
+					if($("#order_note")[0].value.trim() == '' || $("#order_note")[0].value.trim() == 'undefined'){
+			    		mui.alert( '请先填写订单描述!', '提示')
+						return false
+			    	}
 					var OrderData = {
 						"order_no": $("#order_number")[0].value,
 						"order_describe": $("#order_note")[0].value,
@@ -208,9 +272,9 @@
 						"yt_end_time": $('#order_yt_e')[0].value,
 						"fstatus": 0,
 						"cx_begin_time": $('#order_cx_s')[0].value,
-						"cx_end_time": $('#order_yt_e')[0].value,
-						"begin_time": "2018-06-08",
-						"end_time": "2018-06-08",
+						"cx_end_time": $('#order_cx_e')[0].value,
+//						"begin_time": "2018-06-08",
+//						"end_time": "2018-06-08",
 						"mg_begin_time": $('#order_mg_s')[0].value,
 						"mg_end_time": $('#order_mg_e')[0].value,
 						"yq_begin_time": $('#order_yq_s')[0].value,
@@ -220,7 +284,31 @@
 						"cx2_begin_time": $('#order_cx2_s')[0].value,
 						"cx2_end_time": $('#order_cx2_e')[0].value,
 					}
-					console.log(OrderData)
+					mask.show()
+					mui.ajax(Url + 'insertOrder',{
+						data:OrderData,
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{'Content-Type':'application/json'},	              
+						success:function(data){
+							switch(data.code){
+								case 0:
+									mui.toast(data.message,{ duration:'1500', type:'div' })
+									mask.close()
+									mui.back()
+									break
+								default:
+									mask.close()
+									mui.toast(data.message,{ duration:'1500', type:'div' })
+							}
+							
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
 				});
 			})(mui);
 		</script>

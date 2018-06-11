@@ -55,14 +55,17 @@
 								OrderListHtml = '<h4 class="emptyList">暂无订单</h4>'
 							}else{
 								data.employeeList.map(function(Item,Idx){
-			            		OrderListHtml += '<li class="mui-table-view-cell" onclick="ToModifyOrder( '+ Idx +')">'+
+			            		OrderListHtml += '<li class="mui-table-view-cell">'+
 					            		'<div class="mui-row  recordItem">'+
-									        '<div class="mui-col-sm-12 mui-col-xs-12 ">'+
+									        '<div class="mui-col-sm-8 mui-col-xs-8 ">'+
 									            '<span>'+ (Idx + 1) + '.  单号: '+ Item.order_no +'</span>'+
 									        '</div>'+
-//									        '<div class="mui-col-sm-8 mui-col-xs-8 TextAlign_Right">'+
-//									        	'<span>'+ Item.order_no +'</span>'+
-//									        '</div>'+
+									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
+									        	'<span onclick="ToModifyOrder( '+ Idx +')">修改</span>'+
+									        '</div>'+
+									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
+									        	'<span onclick="ToOperationOrder( '+ Idx +')" >流转</span>'+
+									        '</div>'+
 									    '</div>'+
 				            		'</li>'
 				            	})
@@ -74,14 +77,22 @@
 			
 			GetOrderList();
 			
-			//去修开工
-			var ToModifyOrder = function(Idx){
-			    console.info(OrderList[Idx]);
+			//去开工
+			var ToOperationOrder = function(Idx){
 				window.localStorage.setItem('orderId',OrderList[Idx].order_no);
                 window.localStorage.setItem('orderDetail',JSON.stringify(OrderList[Idx]));
                 mui.openWindow({
 					    url:'../operation/index.html',
 					    id:'operation/index.html',
+					})
+			};
+			//去修改订单
+			var ToModifyOrder = function(Idx){
+				window.localStorage.setItem('orderId',OrderList[Idx].order_no);
+                window.localStorage.setItem('orderDetail',JSON.stringify(OrderList[Idx]));
+                mui.openWindow({
+					    url:'../orderModify/index.html',
+					    id:'orderModify/index.html',
 					})
 			};
 			

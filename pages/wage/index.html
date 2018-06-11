@@ -19,7 +19,7 @@
 		<footer class="tabBar">
 			<div class="mui-content" style="height: 100%;background: #007aff;">
 			    <div class="mui-row">
-			        <div class="mui-col-sm-12 mui-col-xs-12 " onclick="GoDepartment()">
+			        <div id="ToggleDepartment" class="mui-col-sm-12 mui-col-xs-12 ">
 			            	切换部门
 			        </div>
 			    </div>
@@ -48,14 +48,12 @@
 						    id:'add/index.html',
 						})
 				});
-				
-				//去部门列表
-				var GoDepartment = function(){
+				$('#ToggleDepartment')[0].addEventListener('tap', function(event) {
 					mui.openWindow({
 					    url:'../department/index.html',
 					    id:'department/index.html',
 					})
-				};
+				});
 				
 			})(mui);
 		</script>
