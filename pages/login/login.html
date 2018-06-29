@@ -99,53 +99,118 @@
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
-				
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" >登录1</button>
+				<button id='scan' class="mui-btn mui-btn-block mui-btn-primary" >调起</button>
 			</div>
-			<div class="mui-content-padded oauth-area">
-
-			</div>
+			<p id='result'></p>
 		</div>
 		
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
 		<script src="../../js/utils.js"></script>
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 		<script>
 			var mask = mui.createMask();
 			var loginButton = document.getElementById('login');
-			var accountBox = document.getElementById('account');
-			var passwordBox = document.getElementById('password');
+			var ScanButton = document.getElementById('scan');
+			var resultP = document.getElementById('result');
 			
-			loginButton.addEventListener('tap', function(event) {
-				mask.show()
-				mui.post(Url + 'login',{
-						username: accountBox.value,
-						password: passwordBox.value,
-				},function(data){
-						switch(data.code){
-							case 0:
-								ToDepartment()
-								mui.toast('登陆成功',{ duration:'1500', type:'div' })
-								window.localStorage.setItem('role',data.user.isManager)
-								window.localStorage.setItem('userid',data.user.id)
-								break
-							default:
-								mask.close()
-								mui.toast(data.message,{ duration:'1500', type:'div' })
-						}
+			function ConfigFn(JsapiTicket){
+				resultP.innerHTML = 'in ConfigFn---'
+				var mytimestamp = (Date.parse(new Date())) / 1000;
+				var mynonceStr = sha1.hash(String(mytimestamp)).substring(0, 16);
+				var mysignature = "jsapi_ticket=" + JsapiTicket + "&noncestr=" + mynonceStr + "&timestamp=" + mytimestamp + "&url=" + window.parent.location.href.split("#")[0];
+			
+				wx.config({
+				    beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
+				    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				    appId: 'wwa4949071417f1baf', // 必填，企业微信的corpID
+				    timestamp: mytimestamp, // 必填，生成签名的时间戳
+				    nonceStr: mynonceStr, // 必填，生成签名的随机串
+				    signature: sha1.hash(mysignature),// 必填，签名，见附录1
+				    jsApiList: [
+				    	'scanQRCode',
+				    	'chooseImage'
+				    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+				wx.error(function(res){
+					console.log('config失败---')
+					resultP.innerHTML = res.errMsg
+				    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+				});
+				wx.ready(function(){
+					wx.chooseImage({
+					    count: 1, // 默认9
+					    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+					    sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
+					    //defaultCameraMode: "batch", //表示进入拍照界面的默认模式，目前有normal与batch两种选择，normal表示普通单拍模式，batch表示连拍模式，不传该参数则为normal模式。（注：用户进入拍照界面仍然可自由切换两种模式）
+					    success: function (res) {
+					        //var localIds = res.localIds; // 返回选定照片的本地ID列表，
+					                // andriod中localId可以作为img标签的src属性显示图片；
+					                // 而在IOS中需通过上面的接口getLocalImgData获取图片base64数据，从而用于img标签的显示
+					    }
+					});
+				    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+				});
+			};
+			
+			ScanButton.addEventListener('tap', function(event) {
+				resultP.innerHTML = 'in chooseImage ---'
+				wx.chooseImage({
+				    count: 1, // 默认9
+				    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
+				    //defaultCameraMode: "batch", //表示进入拍照界面的默认模式，目前有normal与batch两种选择，normal表示普通单拍模式，batch表示连拍模式，不传该参数则为normal模式。（注：用户进入拍照界面仍然可自由切换两种模式）
+				    success: function (res) {
+				        //var localIds = res.localIds; // 返回选定照片的本地ID列表，
+				                // andriod中localId可以作为img标签的src属性显示图片；
+				                // 而在IOS中需通过上面的接口getLocalImgData获取图片base64数据，从而用于img标签的显示
+				    }
+				});
+			});
+			
+			function GetJsapiTicket(ACCESS_TOKEN){
+				mui.get('http://www.btzoon.com:8080/gxJK/getJSApiTicket?yxName=工序',{},function(res){
+						//JsapiTicket = res.ticket
+						resultP.innerHTML = res.ticket
+						ConfigFn(res.ticket)
 					},'json'
 				);
-				
-				var ToDepartment = function(){
-					setTimeout(function(){
-						mui.openWindow({
-						    url:'../department/index.html',
-						    id:'department/index.html',
-						})
-					},1500)
-				};
-				
+			};
+			
+			
+			
+			
+			function GetRequest() {
+			    return QueryString.data;
+			}
+			var QueryString = {
+		        data: {},
+		        Initial: function () {
+		            var aPairs, aTmp;
+		            var queryString = new String(window.parent.location.search);
+		            queryString = queryString.substr(1, queryString.length); //remove   "?"     
+		            aPairs = queryString.split("&");
+		            for (var i = 0; i < aPairs.length; i++) {
+		                aTmp = aPairs[i].split("=");
+		                this.data[aTmp[0]] = aTmp[1];
+		            }
+		        },
+		        GetValue: function (key) {
+		            return this.data[key];
+		        }
+		    }
+			QueryString.Initial();
+			
+			loginButton.addEventListener('tap', function(event) {
+				GetJsapiTicket()
+				//var openid = GetRequest()["code"];
+				//alert(openid)
 			});
+			
+			
+			
 		</script>
 	</body>
 </html>
