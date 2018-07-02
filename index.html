@@ -3,207 +3,30 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>登录</title>
-		<link href="./css/mui.min.css" rel="stylesheet" />
-		<link href="./css/style.css" rel="stylesheet" />
-		<script src="./js/jquery-3.3.1.min.js"></script>
-		<style>
-			.area {
-				margin: 20px auto 0px auto;
-			}
-			
-			.mui-input-group {
-				margin-top: 10px;
-			}
-			
-			.mui-input-group:first-child {
-				margin-top: 20px;
-			}
-			
-			.mui-input-group label {
-				width: 22%;
-			}
-			
-			.mui-input-row label~input,
-			.mui-input-row label~select,
-			.mui-input-row label~textarea {
-				width: 78%;
-			}
-			
-			.mui-checkbox input[type=checkbox],
-			.mui-radio input[type=radio] {
-				top: 6px;
-			}
-			
-			.mui-content-padded {
-				margin-top: 25px;
-			}
-			
-			.mui-btn {
-				padding: 10px;
-			}
-			
-			.link-area {
-				display: block;
-				margin-top: 25px;
-				text-align: center;
-			}
-			
-			.spliter {
-				color: #bbb;
-				padding: 0px 8px;
-			}
-			
-			.oauth-area {
-				position: absolute;
-				bottom: 20px;
-				left: 0px;
-				text-align: center;
-				width: 100%;
-				padding: 0px;
-				margin: 0px;
-			}
-			
-			.oauth-area .oauth-btn {
-				display: inline-block;
-				width: 50px;
-				height: 50px;
-				background-size: 30px 30px;
-				background-position: center center;
-				background-repeat: no-repeat;
-				margin: 0px 20px;
-				border: solid 1px #ddd;
-				border-radius: 25px;
-			}
-			
-			.oauth-area .oauth-btn:active {
-				border: solid 1px #aaa;
-			}
-			
-			.oauth-area .oauth-btn.disabled {
-				background-color: #ddd;
-			}
-		</style>
+		<title>登录1</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery-3.3.1.min.js"></script>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
 		</header>
 		
-		<div class="mui-content">
-			<form id='login-form' class="mui-input-group">
-				<div class="mui-input-row">
-					<label>账号</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
-				</div>
-				<div class="mui-input-row">
-					<label>密码</label>
-					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
-				</div>
-			</form>
-			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" >登录1</button>
-				<button id='scan' class="mui-btn mui-btn-block mui-btn-primary" >调起</button>
-			</div>
-			<p id='result'></p>
-		</div>
-		
-		<script src="./js/mui.min.js"></script>
-		<script src="./js/mui.enterfocus.js"></script>
-		<script src="./js/utils.js"></script>
-		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
 		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-		<script>
-			var mask = mui.createMask();
-			var loginButton = document.getElementById('login');
-			var ScanButton = document.getElementById('scan');
-			var resultP = document.getElementById('result');
-			
-			function ConfigFn(JsapiTicket){
-				resultP.innerHTML = 'in ConfigFn---'
-				var mytimestamp = (Date.parse(new Date())) / 1000;
-				var mynonceStr = sha1.hash(String(mytimestamp)).substring(0, 16);
-				var mysignature = "jsapi_ticket=" + JsapiTicket + "&noncestr=" + mynonceStr + "&timestamp=" + mytimestamp + "&url=" + window.parent.location.href.split("#")[0];
-			
-				wx.config({
-				    beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
-				    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-				    appId: 'wwa4949071417f1baf', // 必填，企业微信的corpID
-				    timestamp: mytimestamp, // 必填，生成签名的时间戳
-				    nonceStr: mynonceStr, // 必填，生成签名的随机串
-				    signature: sha1.hash(mysignature),// 必填，签名，见附录1
-				    jsApiList: [
-				    	'scanQRCode',
-				    	'chooseImage'
-				    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-				});
-				wx.error(function(res){
-					console.log('config失败---')
-					resultP.innerHTML = res.errMsg
-				    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-				});
-				wx.ready(function(){
-				    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-				});
-			};
-			
-			ScanButton.addEventListener('tap', function(event) {
-				wx.scanQRCode({
-				    desc: 'scanQRCode desc',
-				    needResult: 1, // 默认为0，扫描结果由企业微信处理，1则直接返回扫描结果，
-				    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-				    success: function(res) {
-				        // res.resultStr 扫描结果
-				    },
-				    error: function(res) {
-				        if (res.errMsg.indexOf('function_not_exist') > 0) {
-				            alert('版本过低请升级')
-				        }
-				    }
-				});
+		<script type="text/javascript">
+			mui.init({
+			    subpages:[{
+			      url:'pages/login/login.html',
+			      id:'login.html',
+			      styles:{
+			        top:'45px',
+			        bottom:'0px'
+			      }
+			    }],
 			});
-			
-			function GetJsapiTicket(ACCESS_TOKEN){
-				mui.get('http://www.btzoon.com:8080/gxJK/getJSApiTicket?yxName=工序',{},function(res){
-						//JsapiTicket = res.ticket
-						resultP.innerHTML = res.ticket
-						ConfigFn(res.ticket)
-					},'json'
-				);
-			};
-			
-			
-			
-			
-			function GetRequest() {
-			    return QueryString.data;
-			}
-			var QueryString = {
-		        data: {},
-		        Initial: function () {
-		            var aPairs, aTmp;
-		            var queryString = new String(window.parent.location.search);
-		            queryString = queryString.substr(1, queryString.length); //remove   "?"     
-		            aPairs = queryString.split("&");
-		            for (var i = 0; i < aPairs.length; i++) {
-		                aTmp = aPairs[i].split("=");
-		                this.data[aTmp[0]] = aTmp[1];
-		            }
-		        },
-		        GetValue: function (key) {
-		            return this.data[key];
-		        }
-		    }
-			QueryString.Initial();
-			
-			loginButton.addEventListener('tap', function(event) {
-				GetJsapiTicket()
-				//var openid = GetRequest()["code"];
-				//alert(openid)
-			});
-			
-			
-			
 		</script>
 	</body>
 </html>

@@ -155,17 +155,7 @@
         <div class="mui-col-sm-6 mui-col-xs-6 ">
             压贴完工日期：<span id="yt_end_time"></span>
         </div>
-
     </div>
-    <!--<div class="mui-row ColumnBar Margin_T0">
-        <div class="mui-col-sm-6 mui-col-xs-6 ">
-            成型开工日期：<span id="cx_begin_time"></span>
-        </div>
-
-        <div class="mui-col-sm-6 mui-col-xs-6 ">
-            成型完工日期：<span id="cx_end_time"></span>
-        </div>
-    </div>-->
     <div class="mui-row ColumnBar Margin_T0">
         <div class="mui-col-sm-6 mui-col-xs-6 ">
             成型一组开工日期：<span id="cx_begin_time"></span>
@@ -305,27 +295,6 @@
             <input id="chengxing2-endTime" type="text" disabled placeholder="完工日期">
         </div>
     </div>
-    <!--<div class="mui-row ColumnBar Margin_T0">
-        <div class="mui-col-sm-2 mui-col-xs-2 ">
-            <span id="chengxing-status"></span>
-        </div>
-        <div class="mui-col-sm-1 mui-col-xs-1 ">
-            成型
-        </div>
-        <div class="mui-col-sm-2 mui-col-xs-2 ">
-            <span id="chengxing" hidden></span>
-            <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none" onclick="inputNum(this,'成型')">输入数量</button>
-            <span></span>
-        </div>
-
-        <div class="mui-col-sm-3 mui-col-xs-3 ">
-            <input id="chengxing-startTime" type="text" disabled placeholder="开工日期">
-        </div>
-        <div class="mui-col-sm-1 mui-col-xs-1 "></div>
-        <div class="mui-col-sm-3 mui-col-xs-3 ">
-            <input id="chengxing-endTime" type="text" disabled placeholder="完工日期">
-        </div>
-    </div>-->
     <div class="mui-row ColumnBar Margin_T0">
         <div class="mui-col-sm-2 mui-col-xs-2 ">
             <span id="mugong-status"></span>
@@ -345,8 +314,6 @@
         <div class="mui-col-sm-3 mui-col-xs-3 ">
             <input id="mugong-endTime" type="text" disabled placeholder="完工日期">
         </div>
-
-
     </div>
     <div class="mui-row ColumnBar Margin_T0">
         <div class="mui-col-sm-2 mui-col-xs-2 ">
@@ -411,8 +378,6 @@
     var youqi = "8a8a8aa863b038a00163b14728a90014";
     //包装
     var baozhuang = "8a8a8aa863b9ebbc0163bb713304021d";
-
-    //var Url = 'http://220.248.107.62:8086/gxJK/';
     
     var departmentId;
     $(function () {
@@ -443,19 +408,14 @@
         $("#bz_end_time").text(formatDateTime(orderDetailData.bz_end_time.time));
 
 
-
-
-
         mui.get(Url + 'orderDetail?order_no='+orderDetailData.order_no,{},function(data){
                 if(departmentId==yatie || departmentId==baozhuang){
                     $("#btnOpenWork").show();
                 }
-
                 $.each(data.orderDetail,function(i,data){
                 if(!data.fstatus){
                     data.fstatus = 0;
                 }
-
                 if(data.gongxu=="压贴"){
                     $("#yatie").html(data.id);
                     if(data.fstatus==3){
@@ -469,12 +429,6 @@
                     }else{
                         $("#btnOpenWork").html("已开工");
                     }
-//                  if(data.fstatus==0){
-//                      $("#btnOpenWork").html("开工");
-//                  }else if(data.fstatus==1){
-//                      $("#btnOpenWork").html("已开工");
-//                  }
-
                     if(data.fnumber>0){
                         $("#yatie").next().hide();
                         $("#yatie").next().next().text(data.fnumber);
@@ -588,8 +542,6 @@
             });
             showNumberButton();
         },'json');
-
-
     });
 
     function showNumberButton(){
