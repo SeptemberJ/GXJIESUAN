@@ -120,6 +120,7 @@
 			(function($) {
 				$.init();
 				var mask = mui.createMask();
+				var AccessToken = '';
 				//yt
 				$('#order_yt_s')[0].addEventListener('tap', function(event) {
 					var dtPicker = new mui.DtPicker({"type": "date",}); 
@@ -198,6 +199,13 @@
 				    	$('#order_bz_e')[0].value = selectItems.value
 				    })
 				});
+				function GetAccessToken(){
+					mui.get(Url + 'getAccessToken',{yxName:'工序'},function(res){
+						AccessToken = res.accessToken
+						},'json'
+					);
+				};
+				GetAccessToken()
 				$("#save")[0].addEventListener('tap', function(event) {
 					//校验
 					if($("#order_number")[0].value.trim() == '' || $("#order_number")[0].value.trim() == 'undefined'){
@@ -269,8 +277,6 @@
 						"fstatus": 0,
 						"cx_begin_time": $('#order_cx_s')[0].value,
 						"cx_end_time": $('#order_cx_e')[0].value,
-//						"begin_time": "2018-06-08",
-//						"end_time": "2018-06-08",
 						"mg_begin_time": $('#order_mg_s')[0].value,
 						"mg_end_time": $('#order_mg_e')[0].value,
 						"yq_begin_time": $('#order_yq_s')[0].value,
@@ -281,7 +287,7 @@
 						"cx2_end_time": $('#order_cx2_e')[0].value,
 					}
 					mask.show()
-					mui.ajax(Url + 'insertOrder',{
+					mui.ajax(Url + 'insertOrder?acess_token=' + AccessToken + '&yxName=工序',{
 						data:OrderData,
 						dataType:'json',
 						type:'post',
@@ -291,8 +297,12 @@
 							switch(data.code){
 								case 0:
 									mui.toast(data.message,{ duration:'1500', type:'div' })
-									mask.close()
-									mui.back()
+									
+									setTimeout(function(){
+										mask.close()
+										mui.back()
+									},1500)
+									
 									break
 								default:
 									mask.close()

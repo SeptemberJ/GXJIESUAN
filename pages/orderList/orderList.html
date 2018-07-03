@@ -77,6 +77,11 @@
 			
 			GetOrderList();
 			
+			window.addEventListener('refresh', function(e){//执行刷新  
+			  GetOrderList();
+			});
+			
+			
 			//去开工
 			var ToOperationOrder = function(Idx){
 				window.localStorage.setItem('orderId',OrderList[Idx].order_no);

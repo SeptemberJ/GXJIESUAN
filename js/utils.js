@@ -1,4 +1,5 @@
-var Url = 'http://39.106.121.17:8088/gxJK/'//'http://220.248.107.62:8086/gxJK/';
+var Url = 'http://www.btzoon.com:8080/gxJK/'; 
+//'http://39.106.121.17:8088/gxJK/' 
 //js-sdk
 var sha1;
 (function (sha1) {

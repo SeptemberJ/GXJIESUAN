@@ -240,6 +240,7 @@
             压贴
         </div>
         <div class="mui-col-sm-2 mui-col-xs-2 ">
+        	<span id="yatie_forder" hidden></span>
             <span id="yatie" hidden></span>
             <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'压贴')">输入数量</button>
             <span></span>
@@ -261,6 +262,7 @@
             成型一组
         </div>
         <div class="mui-col-sm-2 mui-col-xs-2 ">
+        	<span id="chengxing_forder" hidden></span>
             <span id="chengxing" hidden></span>
             <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none" onclick="inputNum(this,'成型车间一组')">输入数量</button>
             <span></span>
@@ -282,6 +284,7 @@
             成型二组
         </div>
         <div class="mui-col-sm-2 mui-col-xs-2 ">
+        	<span id="chengxing2_forder" hidden></span>
             <span id="chengxing2" hidden></span>
             <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none" onclick="inputNum(this,'成型车间二组')">输入数量</button>
             <span></span>
@@ -303,6 +306,7 @@
             木工
         </div>
         <div class="mui-col-sm-2 mui-col-xs-2 ">
+        	<span id="mugong_forder" hidden></span>
             <span id="mugong" hidden></span>
             <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'木工')">输入数量</button>
             <span></span>
@@ -323,6 +327,7 @@
             油漆
         </div>
         <div class="mui-col-sm-2 mui-col-xs-2 ">
+        	<span id="youqi_forder" hidden></span>
             <span id="youqi" hidden></span>
             <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'油漆')">输入数量</button>
             <span></span>
@@ -343,6 +348,7 @@
             包装
         </div>
         <div class="mui-col-sm-2 mui-col-xs-2">
+        	<span id="baozhuang_forder" hidden></span>
             <span id="baozhuang" hidden></span>
             <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'包装')">输入数量</button>
             <span></span>
@@ -379,6 +385,8 @@
     //包装
     var baozhuang = "8a8a8aa863b9ebbc0163bb713304021d";
     
+    var AccessToken = '';
+    
     var departmentId;
     $(function () {
         if(!window.localStorage.getItem('departmentId')){
@@ -386,6 +394,10 @@
 
             })
         }
+        mui.get(Url + 'getAccessToken',{yxName:'工序'},function(res){
+			AccessToken = res.accessToken
+			},'json'
+		);
 
         var departmentId = window.localStorage.getItem('departmentId');
         var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
@@ -417,6 +429,7 @@
                     data.fstatus = 0;
                 }
                 if(data.gongxu=="压贴"){
+                	$("#yatie_forder").html(data.forder);
                     $("#yatie").html(data.id);
                     if(data.fstatus==3){
                         $("#yatie-status").css("color","#F00");
@@ -441,6 +454,7 @@
                     }
 
                 }else if(data.gongxu=="成型一组"){
+                	$("#chengxing_forder").html(data.forder);
                     $("#chengxing").html(data.id);
                     if(data.fstatus==3){
                         $("#chengxing-status").css("color","#F00");
@@ -460,6 +474,7 @@
                     }
 
                 }else if(data.gongxu=="成型二组"){
+                	$("#chengxing2_forder").html(data.forder);
                     $("#chengxing2").html(data.id);
                     if(data.fstatus==3){
                         $("#chengxing2-status").css("color","#F00");
@@ -479,6 +494,7 @@
                     }
 
                 }else if(data.gongxu=="木工"){
+                	$("#mugong_forder").html(data.forder);
                     $("#mugong").html(data.id);
                     if(data.fstatus==3){
                         $("#mugong-status").css("color","#F00");
@@ -497,6 +513,7 @@
                         $("#mugong-endTime").val(formatDateTime(data.fendtime.time));
                     }
                 }else if(data.gongxu=="油漆"){
+                	$("#youqi_forder").html(data.forder);
                     $("#youqi").html(data.id);
                     if(data.fstatus==3){
                         $("#youqi-status").css("color","#F00");
@@ -516,6 +533,7 @@
                     }
 
                 }else if(data.gongxu=="包装"){
+                	$("#baozhuang_forder").html(data.forder);
                     $("#baozhuang").html(data.id);
                     if(data.fstatus==3){
                         $("#baozhuang-status").css("color","#F00");
@@ -590,27 +608,27 @@
             var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
             if(name=="压贴"){
                 var status = nowTime.getTime()>orderDetailData.yt_end_time.time?3:2;
-                updateDetail($(ele).prev().text(),data.value,status);
+                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
                 updateOpenWork($("#chengxing").text(),1);
             }else if(name=="成型车间一组"){
                 var status = nowTime.getTime()>orderDetailData.cx_end_time.time?3:2;
-                updateDetail($(ele).prev().text(),data.value,status);
+                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
                 updateOpenWork($("#chengxing2").text(),1);
             }else if(name=="成型车间二组"){
                 var status = nowTime.getTime()>orderDetailData.cx2_end_time.time?3:2;
-                updateDetail($(ele).prev().text(),data.value,status);
+                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
                 updateOpenWork($("#mugong").text(),1);
             }else if(name=="木工"){
                 var status = nowTime.getTime()>orderDetailData.mg_end_time.time?3:2;
-                updateDetail($(ele).prev().text(),data.value,status);
+                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
                 updateOpenWork($("#youqi").text(),1);
             }else if(name=="油漆"){
                 var status = nowTime.getTime()>orderDetailData.yq_end_time.time?3:2;
-                updateDetail($(ele).prev().text(),data.value,status);
+                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
                 updateOpenWork($("#baozhuang").text(),1);
             }else if(name=="包装"){
                 var status = nowTime.getTime()>orderDetailData.bz_end_time.time?3:2;
-                updateDetail($(ele).prev().text(),data.value,status);
+                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
                 updateOpenWork($("#baozhuang").text(),1);
             }
 
@@ -635,8 +653,8 @@
         }
     }
 
-    function updateDetail(id,fnumber,fstatus){
-        mui.get(Url + 'updateOrderDeatail',{userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus},function(data){
+    function updateDetail(Forder,id,fnumber,fstatus){
+        mui.get(Url + 'updateOrderDeatail',{forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus},function(data){
             location.reload();
         },'json');
     }
