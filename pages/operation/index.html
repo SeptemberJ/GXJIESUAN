@@ -11,6 +11,9 @@
 			html , body{
 				background: #fff;
 			}
+			.mui-popup{
+				position:fixed !important;
+			}
 			.FloatRight{
 	            float: right;
 	            color: #dd524d;
@@ -222,7 +225,7 @@
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            工序
 		        </div>
-		        <div class="mui-col-sm-2 mui-col-xs-2 ">
+		        <div class="mui-col-sm-2 mui-col-xs-3 ">
 		            数量
 		        </div>
 		        <div class="mui-col-sm-3 mui-col-xs-3 ">
@@ -236,7 +239,8 @@
 		    </div>
 		    <div class="mui-row ColumnBar Margin_T0">
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
-		            <span id="yatie-status"></span>
+		            <span id="yatie-status-txt" hidden></span>
+		            <img id="yatie-status"/>
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            压贴
@@ -244,7 +248,7 @@
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
 		        	<span id="yatie_forder" hidden></span>
 		            <span id="yatie" hidden></span>
-		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'压贴')">输入数量</button>
+		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none;width: 90%;padding: 6px 2px;" onclick="inputNum(this,'压贴')">扫码</button>
 		            <span></span>
 		        </div>
 		        <div class="mui-col-sm-3 mui-col-xs-3 " >
@@ -257,8 +261,9 @@
 		
 		    </div>
 		    <div class="mui-row ColumnBar Margin_T0">
-		        <div class="mui-col-sm-2 mui-col-xs-2 ">
-		            <span id="chengxing-status"></span>
+		        <div class="mui-col-sm-2 mui-col-xs-2">
+		        	<span id="chengxing-status-txt" hidden></span>
+		            <img id="chengxing-status"/>
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            成型一组
@@ -266,7 +271,7 @@
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
 		        	<span id="chengxing_forder" hidden></span>
 		            <span id="chengxing" hidden></span>
-		            <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none" onclick="inputNum(this,'成型车间一组')">输入数量</button>
+		            <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none;width: 90%;padding: 6px 2px;" onclick="inputNum(this,'成型车间一组')">扫码</button>
 		            <span></span>
 		        </div>
 		
@@ -280,7 +285,8 @@
 		    </div>
 		    <div class="mui-row ColumnBar Margin_T0">
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
-		            <span id="chengxing2-status"></span>
+		        	<span id="chengxing2-status-txt" hidden></span>
+		            <img id="chengxing2-status"/>
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            成型二组
@@ -288,7 +294,7 @@
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
 		        	<span id="chengxing2_forder" hidden></span>
 		            <span id="chengxing2" hidden></span>
-		            <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none" onclick="inputNum(this,'成型车间二组')">输入数量</button>
+		            <button class="mui-btn mui-btn-outlined  mui-btn-primary" style="display: none;width: 90%;padding: 6px 2px;" onclick="inputNum(this,'成型车间二组')">扫码</button>
 		            <span></span>
 		        </div>
 		
@@ -302,7 +308,8 @@
 		    </div>
 		    <div class="mui-row ColumnBar Margin_T0">
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
-		            <span id="mugong-status"></span>
+		        	<span id="mugong-status-txt" hidden></span>
+		            <img id="mugong-status"/>
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            木工
@@ -310,7 +317,7 @@
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
 		        	<span id="mugong_forder" hidden></span>
 		            <span id="mugong" hidden></span>
-		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'木工')">输入数量</button>
+		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none;width: 90%;padding: 6px 2px;" onclick="inputNum(this,'木工')">扫码</button>
 		            <span></span>
 		        </div>
 		        <div class="mui-col-sm-3 mui-col-xs-3 ">
@@ -323,7 +330,8 @@
 		    </div>
 		    <div class="mui-row ColumnBar Margin_T0">
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
-		            <span id="youqi-status"></span>
+		        	<span id="youqi-status-txt" hidden></span>
+		            <img id="youqi-status"/>
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            油漆
@@ -331,7 +339,7 @@
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
 		        	<span id="youqi_forder" hidden></span>
 		            <span id="youqi" hidden></span>
-		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'油漆')">输入数量</button>
+		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none;width: 90%;padding: 6px 2px;" onclick="inputNum(this,'油漆')">扫码</button>
 		            <span></span>
 		        </div>
 		        <div class="mui-col-sm-3 mui-col-xs-3 ">
@@ -344,7 +352,8 @@
 		    </div>
 		    <div class="mui-row ColumnBar Margin_T0">
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
-		            <span id="baozhuang-status"></span>
+		        	<span id="baozhuang-status-txt" hidden></span>
+		        	<img id="baozhuang-status"/>
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            包装
@@ -352,7 +361,7 @@
 		        <div class="mui-col-sm-2 mui-col-xs-2">
 		        	<span id="baozhuang_forder" hidden></span>
 		            <span id="baozhuang" hidden></span>
-		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none" onclick="inputNum(this,'包装')">输入数量</button>
+		            <button class="mui-btn mui-btn-outlined mui-btn-primary" style="display: none;width: 90%;padding: 6px 2px;" onclick="inputNum(this,'包装')">扫码</button>
 		            <span></span>
 		        </div>
 		        <div class="mui-col-sm-3 mui-col-xs-3 ">
@@ -400,7 +409,7 @@
 			
 				wx.config({
 				    beta: true,
-				    debug: true, 
+				    debug: false, 
 				    appId: 'wwa4949071417f1baf', 
 				    timestamp: mytimestamp, 
 				    nonceStr: mynonceStr, 
@@ -438,6 +447,7 @@
 				);
 				//页面config配置
 				GetJsapiTicket()
+				//获取图标
 		
 		        var departmentId = window.localStorage.getItem('departmentId');
 		        var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
@@ -471,12 +481,8 @@
 		                if(data.gongxu=="压贴"){
 		                	$("#yatie_forder").html(data.forder);
 		                    $("#yatie").html(data.id);
-		                    if(data.fstatus==3){
-		                        $("#yatie-status").css("color","#F00");
-		                    }else if(data.fstatus==2){
-		                        $("#yatie-status").css("color","#0F0");
-		                    }
-		                    $("#yatie-status").text(getStatus(data.fstatus));
+		                    $('#yatie-status-txt').text(getStatus(data.fstatus))
+		                    $("#yatie-status").attr('src',getStatusIcon(data.fstatus))
 		                    if(data.fstatus==0){
 		                        $("#btnOpenWork").html("开工");
 		                    }else{
@@ -496,12 +502,8 @@
 		                }else if(data.gongxu=="成型一组"){
 		                	$("#chengxing_forder").html(data.forder);
 		                    $("#chengxing").html(data.id);
-		                    if(data.fstatus==3){
-		                        $("#chengxing-status").css("color","#F00");
-		                    }else if(data.fstatus==2){
-		                        $("#chengxing-status").css("color","#0F0");
-		                    }
-		                    $("#chengxing-status").text(getStatus(data.fstatus));
+		                    $('#chengxing-status-txt').text(getStatus(data.fstatus))
+		                    $("#chengxing-status").attr('src',getStatusIcon(data.fstatus))
 		                    if(data.fnumber>0){
 		                        $("#chengxing").next().hide();
 		                        $("#chengxing").next().next().text(data.fnumber);
@@ -516,12 +518,8 @@
 		                }else if(data.gongxu=="成型二组"){
 		                	$("#chengxing2_forder").html(data.forder);
 		                    $("#chengxing2").html(data.id);
-		                    if(data.fstatus==3){
-		                        $("#chengxing2-status").css("color","#F00");
-		                    }else if(data.fstatus==2){
-		                        $("#chengxing2-status").css("color","#0F0");
-		                    }
-		                    $("#chengxing2-status").text(getStatus(data.fstatus));
+		                    $('#chengxing2-status-txt').text(getStatus(data.fstatus));
+		                    $("#chengxing2-status").attr('src',getStatusIcon(data.fstatus));
 		                    if(data.fnumber>0){
 		                        $("#chengxing2").next().hide();
 		                        $("#chengxing2").next().next().text(data.fnumber);
@@ -536,12 +534,8 @@
 		                }else if(data.gongxu=="木工"){
 		                	$("#mugong_forder").html(data.forder);
 		                    $("#mugong").html(data.id);
-		                    if(data.fstatus==3){
-		                        $("#mugong-status").css("color","#F00");
-		                    }else if(data.fstatus==2){
-		                        $("#mugong-status").css("color","#0F0");
-		                    }
-		                    $("#mugong-status").text(getStatus(data.fstatus));
+		                    $('#mugong-status-txt').text(getStatus(data.fstatus));
+		                    $("#mugong-status").attr('src',getStatusIcon(data.fstatus));
 		                    if(data.fnumber>0){
 		                        $("#mugong").next().hide();
 		                        $("#mugong").next().next().text(data.fnumber);
@@ -555,12 +549,8 @@
 		                }else if(data.gongxu=="油漆"){
 		                	$("#youqi_forder").html(data.forder);
 		                    $("#youqi").html(data.id);
-		                    if(data.fstatus==3){
-		                        $("#youqi-status").css("color","#F00");
-		                    }else if(data.fstatus==2){
-		                        $("#youqi-status").css("color","#0F0");
-		                    }
-		                    $("#youqi-status").text(getStatus(data.fstatus));
+		                    $('#youqi-status-txt').text(getStatus(data.fstatus));
+		                    $("#youqi-status").attr('src',getStatusIcon(data.fstatus));
 		                    if(data.fnumber>0){
 		                        $("#youqi").next().hide();
 		                        $("#youqi").next().next().text(data.fnumber);
@@ -575,12 +565,8 @@
 		                }else if(data.gongxu=="包装"){
 		                	$("#baozhuang_forder").html(data.forder);
 		                    $("#baozhuang").html(data.id);
-		                    if(data.fstatus==3){
-		                        $("#baozhuang-status").css("color","#F00");
-		                    }else if(data.fstatus==2){
-		                        $("#baozhuang-status").css("color","#0F0");
-		                    }
-		                    $("#baozhuang-status").text(getStatus(data.fstatus));
+		                    $('#baozhuang-status-txt').text(getStatus(data.fstatus));
+		                    $("#baozhuang-status").attr('src',getStatusIcon(data.fstatus));
 		                    if(data.fnumber>0){
 		                        $("#baozhuang").next().hide();
 		                        $("#baozhuang").next().next().text(data.fnumber);
@@ -605,96 +591,89 @@
 		    function showNumberButton(){
 		        var departmentId = window.localStorage.getItem('departmentId');
 		        if(departmentId==chengxu){
-		            if($("#yatie-status").text()=="开工"){
+		            if($("#yatie-status-txt").text()=="开工"){
 		                $("#yatie").next().show();
 		            }
 		        }else if(departmentId==chengxing){
-		            if($("#yatie-status").text()=="开工"){
+		            if($("#yatie-status-txt").text()=="开工"){
 		                $("#yatie").next().show();
 		            }
 		        }else if(departmentId==chengxing2){
-		            if($("#chengxing-status").text()=="开工"){
+		            if($("#chengxing-status-txt").text()=="开工"){
 		                $("#chengxing").next().show();
 		            }
 		        }else if(departmentId==mugong){
-		            if($("#chengxing2-status").text()=="开工"){
+		            if($("#chengxing2-status-txt").text()=="开工"){
 		                $("#chengxing2").next().show();
 		            }
 		        }else if(departmentId==youqi){
-		            if($("#mugong-status").text()=="开工"){
+		            if($("#mugong-status-txt").text()=="开工"){
 		                $("#mugong").next().show();
 		            }
 		        }else if(departmentId==baozhuang){
-		            if($("#youqi-status").text()=="开工"){
+		            if($("#youqi-status-txt").text()=="开工"){
 		                $("#youqi").next().show();
 		            }
 		        }
 		    }
 		
 		    function inputNum(ele,name) {
+		    	
 		    	wx.scanQRCode({
 				    desc: 'scanQRCode desc',
 				    needResult: 1, 
 				    scanType: ["qrCode", "barCode"], 
 				    success: function(res) {
 				        // res.resultStr 扫描结果
+				        mui.confirm('扫描结果1：' + res.resultStr ,'提示',function(e){
+							if (e.index == 1) {
+								var nowTime = new Date();
+					            var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
+					            if(name=="压贴"){
+					                var status = nowTime.getTime()>orderDetailData.yt_end_time.time?3:2;
+					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
+					                updateOpenWork($("#chengxing").text(),1);
+					            }else if(name=="成型车间一组"){
+					                var status = nowTime.getTime()>orderDetailData.cx_end_time.time?3:2;
+					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
+					                updateOpenWork($("#chengxing2").text(),1);
+					            }else if(name=="成型车间二组"){
+					                var status = nowTime.getTime()>orderDetailData.cx2_end_time.time?3:2;
+					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
+					                updateOpenWork($("#mugong").text(),1);
+					            }else if(name=="木工"){
+					                var status = nowTime.getTime()>orderDetailData.mg_end_time.time?3:2;
+					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
+					                updateOpenWork($("#youqi").text(),1);
+					            }else if(name=="油漆"){
+					                var status = nowTime.getTime()>orderDetailData.yq_end_time.time?3:2;
+					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
+					                updateOpenWork($("#baozhuang").text(),1);
+					            }else if(name=="包装"){
+					                var status = nowTime.getTime()>orderDetailData.bz_end_time.time?3:2;
+					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
+					                updateOpenWork($("#baozhuang").text(),1);
+					            }
+		                   	}
+							if (e.index == 0) {
+		                   }
+						})
 				    },
 				    error: function(res) {
 				        if (res.errMsg.indexOf('function_not_exist') > 0) {
 				            alert('版本过低请升级')
+				        }else{
+				        	alert('扫描失败！')
 				        }
 				    }
 				});
-		    	/*
-		        var orderNumber = $('#orderNumber').text().trim();
-		        mui.prompt('请输入数量','','提示',['确定','取消'],function (data) {
-		            if(data.index==1){
-		                return;
-		            }
-		            if(data.value-orderNumber<0){
-		                mui.toast('不能小于订单数',{ duration:'long', type:'div' })
-		                return;
-		            }
-		            $(ele).next().text(data.value);
-		            $(ele).hide();
-		
-		            var nowTime = new Date();
-		            var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
-		            if(name=="压贴"){
-		                var status = nowTime.getTime()>orderDetailData.yt_end_time.time?3:2;
-		                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
-		                updateOpenWork($("#chengxing").text(),1);
-		            }else if(name=="成型车间一组"){
-		                var status = nowTime.getTime()>orderDetailData.cx_end_time.time?3:2;
-		                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
-		                updateOpenWork($("#chengxing2").text(),1);
-		            }else if(name=="成型车间二组"){
-		                var status = nowTime.getTime()>orderDetailData.cx2_end_time.time?3:2;
-		                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
-		                updateOpenWork($("#mugong").text(),1);
-		            }else if(name=="木工"){
-		                var status = nowTime.getTime()>orderDetailData.mg_end_time.time?3:2;
-		                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
-		                updateOpenWork($("#youqi").text(),1);
-		            }else if(name=="油漆"){
-		                var status = nowTime.getTime()>orderDetailData.yq_end_time.time?3:2;
-		                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
-		                updateOpenWork($("#baozhuang").text(),1);
-		            }else if(name=="包装"){
-		                var status = nowTime.getTime()>orderDetailData.bz_end_time.time?3:2;
-		                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),data.value,status);
-		                updateOpenWork($("#baozhuang").text(),1);
-		            }
-		
-		        },'div');
-		    	*/
 		    }
 		    //
 		    function openWork(ele) {
 		        var departmentId = window.localStorage.getItem('departmentId');
 		        if(departmentId==yatie){
 		            if("开工"==$(ele).html()){
-		                updateOpenWork($("#yatie").text(),1);
+		                updateOpenWork($("#yatie_forder").text(),$("#yatie").text(),1);
 		                $(ele).html("已开工");
 		            }
 		        }else if(departmentId==baozhuang){
@@ -709,17 +688,29 @@
 		    }
 		
 		    function updateDetail(Forder,id,fnumber,fstatus){
-		        mui.get(Url + 'updateOrderDeatail',{forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus},function(data){
+		        mui.get(Url + 'updateOrderDeatail',{order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus},function(data){
 		            location.reload();
 		        },'json');
 		    }
 		    //开工
-		    function updateOpenWork(id,fstatus){
-		        mui.get(Url + 'updateOrderDeatail',{userid:window.localStorage.getItem('userid'),id:id,fstatus:fstatus},function(data){
+		    function updateOpenWork(Forder,id,fstatus){
+		        mui.get(Url + 'updateOrderDeatail',{order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fstatus:fstatus},function(data){
 		            location.reload();
 		        },'json');
 		    }
 		
+		    function getStatusIcon(i) {
+		    	var Icons = JSON.parse(window.localStorage.getItem('Icons'))
+		            if(i==0){
+			            return Icons[0];
+			        }else if(i==1){
+			            return Icons[1];
+			        }else if(i==2){
+			            return Icons[2];
+			        }else if(i==3){
+			            return Icons[3];
+			        }
+		    }
 		    function getStatus(i) {
 		        if(i==0){
 		            return "未开工";

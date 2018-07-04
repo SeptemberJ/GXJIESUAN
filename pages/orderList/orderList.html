@@ -76,6 +76,22 @@
 			};
 			
 			GetOrderList();
+			$(function () {
+				mui.get(Url + 'orderIconList',{},function(res){
+		    		var IconList = {
+		    			'0':'',
+		    			'1':'',
+		    			'2':'',
+		    			'3':''
+		    		}
+		    		var temp = res.orderIconList
+		    		temp.map(function(item,idx){
+		    			IconList[item.icon_type] = item.icon_url
+		    			window.localStorage.setItem('Icons',JSON.stringify(IconList))
+		    		})
+		   		},'json');
+			})
+			
 			
 			window.addEventListener('refresh', function(e){//执行刷新  
 			  GetOrderList();
