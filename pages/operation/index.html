@@ -410,7 +410,7 @@
 				wx.config({
 				    beta: true,
 				    debug: false, 
-				    appId: 'wwa4949071417f1baf', 
+				    appId: 'wwe507783c73f67620', 
 				    timestamp: mytimestamp, 
 				    nonceStr: mynonceStr, 
 				    signature: sha1.hash(mysignature),
@@ -429,7 +429,7 @@
 			};
 			
 		    function GetJsapiTicket(ACCESS_TOKEN){
-				mui.get('http://www.btzoon.com:8080/gxJK/getJSApiTicket?yxName=工序',{},function(res){
+				mui.get(Url + 'getJSApiTicket?yxName=工序',{},function(res){
 						ConfigFn(res.ticket)
 					},'json'
 				);
@@ -625,7 +625,7 @@
 				    scanType: ["qrCode", "barCode"], 
 				    success: function(res) {
 				        // res.resultStr 扫描结果
-				        mui.confirm('扫描结果1：' + res.resultStr ,'提示',function(e){
+				        mui.confirm('扫描结果：' + res.resultStr ,'提示',function(e){
 							if (e.index == 1) {
 								var nowTime = new Date();
 					            var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
