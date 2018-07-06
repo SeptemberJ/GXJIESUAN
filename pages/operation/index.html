@@ -630,32 +630,38 @@
 								var nowTime = new Date();
 					            var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
 					            if(name=="压贴"){
-					                var status = nowTime.getTime()>orderDetailData.yt_end_time.time?3:2;
+					            	var status = compareDate(nowTime,orderDetailData.yt_end_time.time)?3:2;
 					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
 					                updateOpenWork($("#chengxing").text(),1);
 					            }else if(name=="成型车间一组"){
-					                var status = nowTime.getTime()>orderDetailData.cx_end_time.time?3:2;
+					            	var status = compareDate(nowTime,orderDetailData.cx_end_time.time)?3:2;
+					                //var status = nowTime.getTime()>orderDetailData.cx_end_time.time?3:2;
 					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
 					                updateOpenWork($("#chengxing2").text(),1);
 					            }else if(name=="成型车间二组"){
-					                var status = nowTime.getTime()>orderDetailData.cx2_end_time.time?3:2;
+					            	var status = compareDate(nowTime,orderDetailData.cx2_end_time.time)?3:2;
+					                //var status = nowTime.getTime()>orderDetailData.cx2_end_time.time?3:2;
 					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
 					                updateOpenWork($("#mugong").text(),1);
 					            }else if(name=="木工"){
-					                var status = nowTime.getTime()>orderDetailData.mg_end_time.time?3:2;
+					            	var status = compareDate(nowTime,orderDetailData.mg_end_time.time)?3:2;
+					                //var status = nowTime.getTime()>orderDetailData.mg_end_time.time?3:2;
 					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
 					                updateOpenWork($("#youqi").text(),1);
 					            }else if(name=="油漆"){
-					                var status = nowTime.getTime()>orderDetailData.yq_end_time.time?3:2;
+					            	var status = compareDate(nowTime,orderDetailData.yq_end_time.time)?3:2;
+					                //var status = nowTime.getTime()>orderDetailData.yq_end_time.time?3:2;
 					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
 					                updateOpenWork($("#baozhuang").text(),1);
 					            }else if(name=="包装"){
-					                var status = nowTime.getTime()>orderDetailData.bz_end_time.time?3:2;
+					            	var status = compareDate(nowTime,orderDetailData.bz_end_time.time)?3:2;
+					                //var status = nowTime.getTime()>orderDetailData.bz_end_time.time?3:2;
 					                updateDetail($(ele).prev().prev().text(),$(ele).prev().text(),res.resultStr,status);
 					                updateOpenWork($("#baozhuang").text(),1);
 					            }
 		                   	}
 							if (e.index == 0) {
+								
 		                   }
 						})
 				    },
@@ -711,6 +717,11 @@
 			            return Icons[3];
 			        }
 		    }
+		    function compareDate(time1,time2){
+				return ((new Date(formatTimeYMD(time1).replace(/-/g,"\/")))>(new Date(formatTimeYMD(new Date(time2)).replace(/-/g,"\/"))));
+			}
+		    
+								//alert(compareDate(new Date(),JSON.parse(window.localStorage.getItem('orderDetail')).cx_end_time.time)?3:2)
 		    function getStatus(i) {
 		        if(i==0){
 		            return "未开工";
