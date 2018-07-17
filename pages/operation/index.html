@@ -353,7 +353,7 @@
 		    <div class="mui-row ColumnBar Margin_T0">
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
 		        	<span id="baozhuang-status-txt" hidden></span>
-		        	<img id="baozhuang-status"/>
+		        	<!--<img id="baozhuang-status"/>-->
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            包装
@@ -401,6 +401,9 @@
 		    var AccessToken = '';
 		    
 		    var departmentId;
+		    
+		    //仓库
+		    var cangku = '2c91188d646ebbb90164a5d3e7c90086';
 		    
 		    function ConfigFn(JsapiTicket){
 				var mytimestamp = (Date.parse(new Date())) / 1000;
@@ -584,11 +587,11 @@
 		                    }
 		                }
 		            });
-		            showNumberButton();
+		            showNumberButton(data);
 		        },'json');
 		    });
 		
-		    function showNumberButton(){
+		    function showNumberButton(Data){
 		        var departmentId = window.localStorage.getItem('departmentId');
 		        if(departmentId==chengxu){
 		            if($("#yatie-status-txt").text()=="开工"){
@@ -614,6 +617,12 @@
 		            if($("#youqi-status-txt").text()=="开工"){
 		                $("#youqi").next().show();
 		            }
+		        }else if(departmentId == cangku){
+		        	if($("#yatie-status-txt").text()=="完成" || $("#yatie-status-txt").text()=="延期"){
+			            if(Data.fnumber != ''){
+			            	$("#baozhuang").next().show();
+			            }
+			        }
 		        }
 		    }
 		
