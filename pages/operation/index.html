@@ -553,6 +553,7 @@
 		
 		
 		        mui.get(Url + 'orderDetail?order_no='+orderDetailData.order_no,{},function(data){
+		        	console.log(data)
 		                if(departmentId==yatie || departmentId==baozhuang){
 		                    $("#btnOpenWork").show();
 		                }
@@ -775,30 +776,33 @@
 		    	var nowTime = new Date();
 				var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
 		    	if(name == '压贴'){
-		    		
+		    		console.log('压贴-------------------------------')
 		    		var status = compareDate(nowTime,orderDetailData.yt_end_time.time)?3:2;
 	                updateDetail($("#yatie_forder").text(),$("#yatie").text(),$("#SumNum_yatie").text(),status);
-	                updateOpenWork($("#chengxing_forder").text(),$("#chengxing").text(),1);
+	                //updateOpenWork($("#chengxing_forder").text(),$("#chengxing").text(),1);
+	                //debugger
 	                //updateOpenWork($("#chengxing").text(),1);
 		    	}else if(name=="成型车间一组"){
+		    		console.log('成型车间一组-------------------------------')
 	            	var status = compareDate(nowTime,orderDetailData.cx_end_time.time)?3:2;
 	            	updateDetail($("#chengxing_forder").text(),$("#chengxing").text(),$("#SumNum_chengxing").text(),status);
-	            	updateOpenWork($("#chengxing2_forder").text(),$("#chengxing2").text(),1);
+	            	//debugger
+	            	//updateOpenWork($("#chengxing2_forder").text(),$("#chengxing2").text(),1);
 	                //updateOpenWork($("#chengxing2").text(),1);
 	            }else if(name=="成型车间二组"){
 	            	var status = compareDate(nowTime,orderDetailData.cx2_end_time.time)?3:2;
 	                updateDetail($("#chengxing2_forder").text(),$("#chengxing2").text(),$("#SumNum_chengxing2").text(),status);
-	                updateOpenWork($("#mugong_forder").text(),$("#mugong").text(),1);
+	                //updateOpenWork($("#mugong_forder").text(),$("#mugong").text(),1);
 	                //updateOpenWork($("#mugong").text(),1);
 	            }else if(name=="木工"){
 	            	var status = compareDate(nowTime,orderDetailData.mg_end_time.time)?3:2;
 	                updateDetail($("#mugong_forder").text(),$("#mugong").text(),$("#SumNum_mugong").text(),status);
-	                updateOpenWork($("#youqi_forder").text(),$("#youqi").text(),1);
+	                //updateOpenWork($("#youqi_forder").text(),$("#youqi").text(),1);
 	                //updateOpenWork($("#youqi").text(),1);
 	            }else if(name=="油漆"){
 	            	var status = compareDate(nowTime,orderDetailData.yq_end_time.time)?3:2;
 	                updateDetail($("#youqi_forder").text(),$("#youqi").text(),$("#SumNum_youqi").text(),status);
-	                updateOpenWork($("#baozhuang_forder").text(),$("#baozhuang").text(),1);
+	                //updateOpenWork($("#baozhuang_forder").text(),$("#baozhuang").text(),1);
 	                //updateOpenWork($("#baozhuang").text(),1);
 	            }else if(name=="包装"){
 	            	var status = compareDate(nowTime,orderDetailData.bz_end_time.time)?3:2;
@@ -843,10 +847,12 @@
 		    }
 		
 		    function updateDetail(Forder,id,fnumber,fstatus){
+		    	console.log('updateDetail------------------------')
+		    	// debugger
 		    	var obj = {order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus}
 		    	console.log(obj)
-		        mui.get(Url + 'updateOrderDeatail',{order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus},function(data){
-		            location.reload();
+		        mui.get(Url + 'updateOrderDeatail',{order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:123,fstatus:fstatus},function(data){
+		            // location.reload();
 		        },'json');
 		    }
 		    //开工
