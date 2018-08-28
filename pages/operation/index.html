@@ -457,11 +457,18 @@
 
 
 		
-		<script src="../../js/mui.min.js"></script>
+		<!--<script src="../../js/mui.min.js"></script>
     	<script src="../../js/jquery-3.3.1.min.js"></script>
     	<script src="../../js/utils.js"></script>
     	<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    	-->
+    	<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 		<script type="text/javascript">
+			var mask = mui.createMask();
 			var cuurDept = 6;
 		    // 压贴
 		    var yatie = "8a8a8aa863b038a00163b143e2ac0006";
@@ -517,6 +524,8 @@
 			};
 			
 		    $(function () {
+//		    	$.init();
+		    	
 		    	
 		        if(!window.localStorage.getItem('departmentId')){
 		            mui.alert( '请重新登录!', '提示', function(e){
@@ -847,12 +856,19 @@
 		    }
 		
 		    function updateDetail(Forder,id,fnumber,fstatus){
+		    	if (fnumber == ''){
+		    		mui.alert( '请先扫码输入数量!', '提示')
+		    		return false
+		    	}
+		    	// debugger
 		    	console.log('updateDetail------------------------')
+		    	mask.show()
 		    	// debugger
 		    	var obj = {order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus}
 		    	console.log(obj)
-		        mui.get(Url + 'updateOrderDeatail',{order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:123,fstatus:fstatus},function(data){
-		            // location.reload();
+		        mui.get(Url + 'updateOrderDeatail',{order_no:JSON.parse(window.localStorage.getItem('orderDetail')).order_no,forder:Forder,yxName:'工序',acess_token:AccessToken,userid:window.localStorage.getItem('userid'),id:id,fnumber:fnumber,fstatus:fstatus},function(data){
+		            location.reload();
+		            mask.close()
 		        },'json');
 		    }
 		    //开工
