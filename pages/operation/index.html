@@ -577,8 +577,10 @@
 		                    $("#yatie-status").attr('src',getStatusIcon(data.fstatus))
 		                    if(data.fstatus==0){
 		                        $("#btnOpenWork").html("开工");
+		                        $("#btnOpenWork").show();
 		                    }else{
 		                        $("#btnOpenWork").html("已开工");
+		                        $("#btnOpenWork").show();
 		                    }
 		                    if(data.fnumber>0){
 		                        $("#yatie").next().hide();
@@ -675,11 +677,16 @@
 		                    if(data.fendtime){
 		                        $("#baozhuang-endTime").val(formatDateTime(data.fendtime.time));
 		                    }
-		                    if(data.fstatus==1){
-		                        $("#btnOpenWork").html("完工");
-		                    }else if(data.fstatus==2){
+		                    if(data.fstatus==2 || data.fstatus==3){
+		                    	console.log('here----------------')
 		                        $("#btnOpenWork").html("已完成");
+		                        $("#btnOpenWork").show();
 		                    }
+//		                    if(data.fstatus==1){
+//		                        $("#btnOpenWork").html("完工");
+//		                    }else if(data.fstatus==2){
+//		                        $("#btnOpenWork").html("已完成");
+//		                    }
 		                }
 		            });
 		            showNumberButton(data);
@@ -719,11 +726,23 @@
 		                $("#Operation_youqi").show();
 		            }
 		        }else if(departmentId == cangku){
+		        	console.log('cangku-------------')
+		        	console.log(Data)
 		        	if($("#yatie-status-txt").text()=="完成" || $("#yatie-status-txt").text()=="延期"){
-			            if(Data.fnumber != ''){
-			            	//$("#baozhuang").next().show();
-			            	$("#Operation_baozhuang").show();
-			            }
+						console.log($("#btnOpenWork").html())
+						if($("#btnOpenWork").html() == '已完成'){
+							console.log('hide-----------')
+							$("#Operation_baozhuang").hide();
+						}else{
+							console.log('show-----------')
+							$("#Operation_baozhuang").show();
+						}
+						
+//			            if(Data.fnumber != ''){
+//			            	console.log('Data.fnumber !=')
+//			            	console.log(Data.fnumber)
+//			            	$("#Operation_baozhuang").show();
+//			            }
 			        }
 		        }
 		    }
@@ -745,23 +764,23 @@
 					            	var NewNum =  Number(OldNum) + Number(res.resultStr)
 					            	$("#SumNum_yatie").text((NewNum).toFixed(4));
 					            }else if(name=="成型车间一组"){
-					            	var OldNum = $("#SumNum_chengxing").text()>0?$("#SumNum_yatie").text():0;
+					            	var OldNum = $("#SumNum_chengxing").text()>0?$("#SumNum_chengxing").text():0;
 					            	var NewNum =  Number(OldNum) + Number(res.resultStr)
 					            	$("#SumNum_chengxing").text((NewNum).toFixed(4));
 					            }else if(name=="成型车间二组"){
-					            	var OldNum = $("#SumNum_chengxing2").text()>0?$("#SumNum_yatie").text():0;
+					            	var OldNum = $("#SumNum_chengxing2").text()>0?$("#SumNum_chengxing2").text():0;
 					            	var NewNum =  Number(OldNum) + Number(res.resultStr)
 					            	$("#SumNum_chengxing2").text((NewNum).toFixed(4));
 					            }else if(name=="木工"){
-					            	var OldNum = $("#SumNum_mugong").text()>0?$("#SumNum_yatie").text():0;
+					            	var OldNum = $("#SumNum_mugong").text()>0?$("#SumNum_mugong").text():0;
 					            	var NewNum =  Number(OldNum) + Number(res.resultStr)
 					            	$("#SumNum_mugong").text((NewNum).toFixed(4));
 					            }else if(name=="油漆"){
-					            	var OldNum = $("#SumNum_youqi").text()>0?$("#SumNum_yatie").text():0;
+					            	var OldNum = $("#SumNum_youqi").text()>0?$("#SumNum_youqi").text():0;
 					            	var NewNum =  Number(OldNum) + Number(res.resultStr)
 					            	$("#SumNum_youqi").text((NewNum).toFixed(4));
 					            }else if(name=="包装"){
-					            	var OldNum = $("#SumNum_baozhuang").text()>0?$("#SumNum_yatie").text():0;
+					            	var OldNum = $("#SumNum_baozhuang").text()>0?$("#SumNum_baozhuang").text():0;
 					            	var NewNum =  Number(OldNum) + Number(res.resultStr)
 					            	$("#SumNum_baozhuang").text((NewNum).toFixed(4));
 					            }
