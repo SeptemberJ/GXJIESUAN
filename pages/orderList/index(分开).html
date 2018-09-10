@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>订单列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			html , body{
+				background: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订单列表</h1>
+			<span id="addOneOrder" class="mui-icon mui-icon-plus FloatRight"></span>
+			<h5 class="FloatRight">
+				<div id="mySwitch" class="mui-switch mui-switch-mini mui-switch-blue mui-active"  style="margin-top: 4px;margin-right: 10px;">
+				  <div class="mui-switch-handle"></div>
+				</div>
+			</h5>
+		</header>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.js"></script>
+		<script type="text/javascript">
+			(function($) {
+				$.init({
+				    subpages:[{
+				      url:'orderList.html',
+				      id:'orderList.html',
+				      styles:{
+				        top:'45px',
+				        bottom:'0px'
+				      }
+				    }],
+				});
+				
+				//新增订单
+				$('#addOneOrder')[0].addEventListener('tap', function(event) {
+					mui.openWindow({
+					    url:'../orderAdd/index.html',
+					    id:'add/orderAdd.html',
+					})
+				});
+				document.getElementById("mySwitch").addEventListener("toggle",function(event){
+				  if(event.detail.isActive){
+				    console.log("你启动了开关");
+				    
+				  }else{
+				    console.log("你关闭了开关");  
+				  }
+				})
+			})(mui);
+		</script>
+	</body>
+
+</html>
