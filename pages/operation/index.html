@@ -424,7 +424,7 @@
 		    <div class="mui-row ColumnBar Margin_T0">
 		        <div class="mui-col-sm-2 mui-col-xs-2 ">
 		        	<span id="baozhuang-status-txt" hidden></span>
-		        	<!--<img id="baozhuang-status"/>-->
+		        	<img id="baozhuang-status"/>
 		        </div>
 		        <div class="mui-col-sm-1 mui-col-xs-1 ">
 		            包装
@@ -522,9 +522,9 @@
 					},'json'
 				);
 			};
-			
-		    $(function () {
+			$(function () {
 //		    	$.init();
+				var orderFinishedStatus = window.localStorage.getItem('orderFinished');
 		    	
 		    	
 		        if(!window.localStorage.getItem('departmentId')){
@@ -563,9 +563,10 @@
 		
 		        mui.get(Url + 'orderDetail?order_no='+orderDetailData.order_no,{},function(data){
 		        	console.log(data)
-		                if(departmentId==yatie || departmentId==baozhuang){
-		                    $("#btnOpenWork").show();
-		                }
+		        	var last = data.orderDetail.length - 1
+//		                if(departmentId==yatie || departmentId==baozhuang){
+//		                    $("#btnOpenWork").show();
+//		                }
 		                $.each(data.orderDetail,function(i,data){
 		                if(!data.fstatus){
 		                    data.fstatus = 0;
@@ -575,13 +576,16 @@
 		                    $("#yatie").html(data.id);
 		                    $('#yatie-status-txt').text(getStatus(data.fstatus))
 		                    $("#yatie-status").attr('src',getStatusIcon(data.fstatus))
-		                    if(data.fstatus==0){
-		                        $("#btnOpenWork").html("开工");
-		                        $("#btnOpenWork").show();
-		                    }else{
-		                        $("#btnOpenWork").html("已开工");
-		                        $("#btnOpenWork").show();
+		                    if ($("#btnOpenWork").html() != "已完成") {
+		                    	if(data.fstatus==0){
+			                        $("#btnOpenWork").html("开工");
+			                        //$("#btnOpenWork").show();
+			                    }else{
+			                        $("#btnOpenWork").html("已开工");
+			                        //$("#btnOpenWork").show();
+			                    }
 		                    }
+		                    
 		                    if(data.fnumber>0){
 		                        $("#yatie").next().hide();
 		                        $("#yatie").next().next().text(data.fnumber);
@@ -678,22 +682,207 @@
 		                        $("#baozhuang-endTime").val(formatDateTime(data.fendtime.time));
 		                    }
 		                    if(data.fstatus==2 || data.fstatus==3){
-		                    	console.log('here----------------')
+		                    	console.log('here 2223----------------')
 		                        $("#btnOpenWork").html("已完成");
-		                        $("#btnOpenWork").show();
+		                        //$("#btnOpenWork").show();
+		                        
 		                    }
-//		                    if(data.fstatus==1){
-//		                        $("#btnOpenWork").html("完工");
-//		                    }else if(data.fstatus==2){
-//		                        $("#btnOpenWork").html("已完成");
-//		                    }
+		                }
+		                if (i == last) {
+		                	if (orderFinishedStatus == 1) {
+		                		$("#btnOpenWork").html("已完成");
+		                		$("#btnOpenWork").show()
+		                	}else{
+		                		if (departmentId!=yatie && departmentId!=baozhuang && $("#btnOpenWork").html() == "开工") {
+			                		$("#btnOpenWork").html("未开工");
+			                		$("#btnOpenWork").show();
+			                	} else {
+			                		$("#btnOpenWork").show();
+			                	}
+		                	}
 		                }
 		            });
-		            showNumberButton(data);
+		            // showNumberButton(data);
+		            if (orderFinishedStatus == 0){
+		            	showNumberButton(data);
+		            }
 		        },'json');
 		    });
+			
+//		    $(function () {
+////		    	$.init();
+//		    	
+//		    	
+//		        if(!window.localStorage.getItem('departmentId')){
+//		            mui.alert( '请重新登录!', '提示', function(e){
+//		
+//		            })
+//		        }
+//		        mui.get(Url + 'getAccessToken',{yxName:'工序'},function(res){
+//					AccessToken = res.accessToken
+//					},'json'
+//				);
+//				//页面config配置
+//				GetJsapiTicket()
+//				//获取图标
+//		
+//		        var departmentId = window.localStorage.getItem('departmentId');
+//		        var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
+//		
+//		        $("#orderId").text(orderDetailData.order_no);
+//		        $("#remark").text(orderDetailData.order_describe);
+//		        $("#orderNumber").text(orderDetailData.fnumber);
+//		
+//		        $("#yt_begin_time").text(formatDateTime(orderDetailData.yt_begin_time.time));
+//		        $("#yt_end_time").text(formatDateTime(orderDetailData.yt_end_time.time));
+//		        $("#cx_begin_time").text(formatDateTime(orderDetailData.cx_begin_time.time));
+//		        $("#cx_end_time").text(formatDateTime(orderDetailData.cx_end_time.time));
+//		        $("#cx2_begin_time").text(formatDateTime(orderDetailData.cx2_begin_time.time));
+//		        $("#cx2_end_time").text(formatDateTime(orderDetailData.cx2_end_time.time));
+//		        $("#mg_begin_time").text(formatDateTime(orderDetailData.mg_begin_time.time));
+//		        $("#mg_end_time").text(formatDateTime(orderDetailData.mg_end_time.time));
+//		        $("#yq_begin_time").text(formatDateTime(orderDetailData.yq_begin_time.time));
+//		        $("#yq_end_time").text(formatDateTime(orderDetailData.yq_end_time.time));
+//		        $("#bz_begin_time").text(formatDateTime(orderDetailData.bz_begin_time.time));
+//		        $("#bz_end_time").text(formatDateTime(orderDetailData.bz_end_time.time));
+//		
+//		
+//		        mui.get(Url + 'orderDetail?order_no='+orderDetailData.order_no,{},function(data){
+//		        	console.log(data)
+//		                if(departmentId==yatie || departmentId==baozhuang){
+//		                    $("#btnOpenWork").show();
+//		                }
+//		                $.each(data.orderDetail,function(i,data){
+//		                if(!data.fstatus){
+//		                    data.fstatus = 0;
+//		                }
+//		                if(data.gongxu=="压贴"){
+//		                	$("#yatie_forder").html(data.forder);
+//		                    $("#yatie").html(data.id);
+//		                    $('#yatie-status-txt').text(getStatus(data.fstatus))
+//		                    $("#yatie-status").attr('src',getStatusIcon(data.fstatus))
+//		                    if(data.fstatus==0){
+//		                        $("#btnOpenWork").html("开工");
+//		                        $("#btnOpenWork").show();
+//		                    }else{
+//		                        $("#btnOpenWork").html("已开工");
+//		                        $("#btnOpenWork").show();
+//		                    }
+//		                    if(data.fnumber>0){
+//		                        $("#yatie").next().hide();
+//		                        $("#yatie").next().next().text(data.fnumber);
+//		                        $("#SumNum_yatie").text(data.fnumber);
+//		                    }
+//		                    if(data.ftime){
+//		                        $("#yatie-startTime").val(formatDateTime(data.ftime.time));
+//		                    }
+//		                    if(data.fendtime){
+//		                        $("#yatie-endTime").val(formatDateTime(data.fendtime.time));
+//		                    }
+//		
+//		                }else if(data.gongxu=="成型一组"){
+//		                	$("#chengxing_forder").html(data.forder);
+//		                    $("#chengxing").html(data.id);
+//		                    $('#chengxing-status-txt').text(getStatus(data.fstatus))
+//		                    $("#chengxing-status").attr('src',getStatusIcon(data.fstatus))
+//		                    if(data.fnumber>0){
+//		                        $("#chengxing").next().hide();
+//		                        $("#chengxing").next().next().text(data.fnumber);
+//		                        $("#SumNum_chengxing").text(data.fnumber);
+//		                    }
+//		                    if(data.ftime){
+//		                        $("#chengxing-startTime").val(formatDateTime(data.ftime.time));
+//		                    }
+//		                    if(data.fendtime){
+//		                        $("#chengxing-endTime").val(formatDateTime(data.fendtime.time));
+//		                    }
+//		
+//		                }else if(data.gongxu=="成型二组"){
+//		                	$("#chengxing2_forder").html(data.forder);
+//		                    $("#chengxing2").html(data.id);
+//		                    $('#chengxing2-status-txt').text(getStatus(data.fstatus));
+//		                    $("#chengxing2-status").attr('src',getStatusIcon(data.fstatus));
+//		                    if(data.fnumber>0){
+//		                        $("#chengxing2").next().hide();
+//		                        $("#chengxing2").next().next().text(data.fnumber);
+//		                        $("#SumNum_chengxing2").text(data.fnumber);
+//		                    }
+//		                    if(data.ftime){
+//		                        $("#chengxing2-startTime").val(formatDateTime(data.ftime.time));
+//		                    }
+//		                    if(data.fendtime){
+//		                        $("#chengxing2-endTime").val(formatDateTime(data.fendtime.time));
+//		                    }
+//		
+//		                }else if(data.gongxu=="木工"){
+//		                	$("#mugong_forder").html(data.forder);
+//		                    $("#mugong").html(data.id);
+//		                    $('#mugong-status-txt').text(getStatus(data.fstatus));
+//		                    $("#mugong-status").attr('src',getStatusIcon(data.fstatus));
+//		                    if(data.fnumber>0){
+//		                        $("#mugong").next().hide();
+//		                        $("#mugong").next().next().text(data.fnumber);
+//		                        $("#SumNum_mugong").text(data.fnumber);
+//		                    }
+//		                    if(data.ftime){
+//		                        $("#mugong-startTime").val(formatDateTime(data.ftime.time));
+//		                    }
+//		                    if(data.fendtime){
+//		                        $("#mugong-endTime").val(formatDateTime(data.fendtime.time));
+//		                    }
+//		                }else if(data.gongxu=="油漆"){
+//		                	$("#youqi_forder").html(data.forder);
+//		                    $("#youqi").html(data.id);
+//		                    $('#youqi-status-txt').text(getStatus(data.fstatus));
+//		                    $("#youqi-status").attr('src',getStatusIcon(data.fstatus));
+//		                    if(data.fnumber>0){
+//		                        $("#youqi").next().hide();
+//		                        $("#youqi").next().next().text(data.fnumber);
+//		                        $("#SumNum_youqi").text(data.fnumber);
+//		                    }
+//		                    if(data.ftime){
+//		                        $("#youqi-startTime").val(formatDateTime(data.ftime.time));
+//		                    }
+//		                    if(data.fendtime){
+//		                        $("#youqi-endTime").val(formatDateTime(data.fendtime.time));
+//		                    }
+//		
+//		                }else if(data.gongxu=="包装"){
+//		                	$("#baozhuang_forder").html(data.forder);
+//		                    $("#baozhuang").html(data.id);
+//		                    $('#baozhuang-status-txt').text(getStatus(data.fstatus));
+//		                    $("#baozhuang-status").attr('src',getStatusIcon(data.fstatus));
+//		                    if(data.fnumber>0){
+//		                        $("#baozhuang").next().hide();
+//		                        $("#baozhuang").next().next().text(data.fnumber);
+//		                        $("#SumNum_baozhuang").text(data.fnumber);
+//		                    }
+//		                    if(data.ftime){
+//		                        $("#baozhuang-startTime").val(formatDateTime(data.ftime.time));
+//		                    }
+//		                    if(data.fendtime){
+//		                        $("#baozhuang-endTime").val(formatDateTime(data.fendtime.time));
+//		                    }
+//		                    if(data.fstatus==2 || data.fstatus==3){
+//		                    	console.log('here 2223----------------')
+//		                        $("#btnOpenWork").html("已完成");
+//		                        $("#btnOpenWork").show();
+//		                        
+//		                    }
+////		                    if(data.fstatus==1){
+////		                        $("#btnOpenWork").html("完工");
+////		                    }else if(data.fstatus==2){
+////		                        $("#btnOpenWork").html("已完成");
+////		                    }
+//		                }
+//		            });
+//		            // showNumberButton(data);
+//		        },'json');
+//		    });
 		
 		    function showNumberButton(Data){
+		    	console.log('showNumberButton-----')
+		    	console.log(Data)
 		        var departmentId = window.localStorage.getItem('departmentId');
 		        if(departmentId==chengxu){
 		            if($("#yatie-status-txt").text()=="开工"){
@@ -728,22 +917,26 @@
 		        }else if(departmentId == cangku){
 		        	console.log('cangku-------------')
 		        	console.log(Data)
-		        	if($("#yatie-status-txt").text()=="完成" || $("#yatie-status-txt").text()=="延期"){
-						console.log($("#btnOpenWork").html())
-						if($("#btnOpenWork").html() == '已完成'){
-							console.log('hide-----------')
-							$("#Operation_baozhuang").hide();
-						}else{
-							console.log('show-----------')
-							$("#Operation_baozhuang").show();
-						}
-						
-//			            if(Data.fnumber != ''){
-//			            	console.log('Data.fnumber !=')
-//			            	console.log(Data.fnumber)
-//			            	$("#Operation_baozhuang").show();
-//			            }
-			        }
+		        	if($("#youqi-status-txt").text()=="开工"){
+		                //$("#youqi").next().show();
+		                $("#Operation_baozhuang").show();
+		            }
+//		        	if($("#yatie-status-txt").text()=="完成" || $("#yatie-status-txt").text()=="延期"){
+//						console.log($("#btnOpenWork").html())
+//						if($("#btnOpenWork").html() == '已完成'){
+//							console.log('hide-----------')
+//							$("#Operation_baozhuang").hide();
+//						}else{
+//							console.log('show-----------')
+//							$("#Operation_baozhuang").show();
+//						}
+//						
+////			            if(Data.fnumber != ''){
+////			            	console.log('Data.fnumber !=')
+////			            	console.log(Data.fnumber)
+////			            	$("#Operation_baozhuang").show();
+////			            }
+//			        }
 		        }
 		    }
 		

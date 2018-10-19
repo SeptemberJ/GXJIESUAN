@@ -143,27 +143,28 @@
 			QueryString.Initial();
 			
 			function GetUserInfo(CODE){
-//				mui.get(Url + 'getOpen_id',{code:CODE,yxName:'工序'},function(res){
-//					switch(res.code){
-//						case 0:
-//							mui.toast('登陆成功',{ duration:'1500', type:'div' })
-//							window.localStorage.setItem('role',res.user.isManager)
-//							window.localStorage.setItem('userid',res.user.ID)
-//							ToDepartment()
-//							break
-//						default:
-//							mask.close()
-//							mui.alert( res.message + '!', '提示', function(e){})
-//					}
-//					
-//					
-//					
-//					},'json'
-//				);
+				//window.localStorage.setItem('role',0)
+				//window.localStorage.setItem('userid','2c91188d6459ccb901645d9c341a000d')
+				mui.get(Url + 'getOpen_id',{code:CODE,yxName:'工序'},function(res){
+					switch(res.code){
+						case 0:
+							mui.toast('登陆成功',{ duration:'1500', type:'div' })
+							window.localStorage.setItem('role',res.user.isManager)
+							window.localStorage.setItem('userid',res.user.ID)
+							
+							ToDepartment()
+							break
+						default:
+							mask.close()
+							mui.alert( res.message + '!', '提示', function(e){})
+					}
+					
+					},'json'
+				);
 			};
 			
 			GetUserInfo(GetRequest()["code"])
-//alert('code='+ GetRequest()["code"])
+// alert('code='+ GetRequest()["code"])
 			/*
 			var loginButton = document.getElementById('login');
 			var accountBox = document.getElementById('account');

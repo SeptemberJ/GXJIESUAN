@@ -55,6 +55,10 @@
 			GetDepartment();
 			var ToChoose = function(IDX){
 				window.localStorage.setItem('departmentId',departmentList[IDX].ID);
+				window.localStorage.setItem('departmentIdZG',departmentList[IDX].gztype);
+				window.localStorage.setItem('departmentIdDD',departmentList[IDX].ordertype);
+				window.localStorage.setItem('departmentIdWC',departmentList[IDX].alltype);
+				
 				mui.openWindow({
 				    url:'../choose/index.html',
 				    id:'choose/index.html',

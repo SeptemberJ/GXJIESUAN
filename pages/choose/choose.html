@@ -31,8 +31,8 @@
 
 	<body>
 		<div class="Choose">
-			<div class="ChooseItem" onclick="ToWage()">工资录入</div>
-			<div class="ChooseItem" onclick="ToOrder()">订单录入</div>
+			<div id="GZBT" class="ChooseItem" onclick="ToWage()">工资录入</div>
+			<div id="DDBT" class="ChooseItem" onclick="ToOrder()">订单录入</div>
 			
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -40,6 +40,16 @@
 		<script type="text/javascript">
 			mui.init()
 			var departmentList = []
+			if (window.localStorage.getItem('departmentIdZG') == 0) {
+				$("#GZBT").hide();
+			} else {
+				$("#GZBT").show();
+			}
+			if (window.localStorage.getItem('departmentIdDD') == 0) {
+				$("#DDBT").hide();
+			} else {
+				$("#DDBT").show();
+			}
 			var ReLogin = function(){
 				mui.openWindow({
 					    url:'../../index.html',

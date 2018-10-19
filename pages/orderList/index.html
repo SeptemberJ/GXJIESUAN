@@ -72,6 +72,7 @@
 		<script type="text/javascript">
 			mui.init()
 			var OrderList = []
+			var switchStatus = 0
 			//新增订单
 			$('#addOneOrder')[0].addEventListener('tap', function(event) {
 				mui.openWindow({
@@ -89,11 +90,16 @@
 							if(data.employeeList.length <= 0){
 								OrderListHtml = '<h4 class="emptyList">暂无订单</h4>'
 							}else{
+								var wctype = window.localStorage.getItem('departmentIdWC')
+								var ifCanFinish = (wctype == 1?true:false)
 								data.employeeList.map(function(Item,Idx){
 			            		OrderListHtml += '<li class="mui-table-view-cell">'+
 					            		'<div class="mui-row  recordItem">'+
-									        '<div class="mui-col-sm-8 mui-col-xs-8 ">'+
-									            '<span>'+ (Idx + 1) + '.  单号: '+ Item.order_no +'</span>'+
+									        '<div class="mui-col-sm-6 mui-col-xs-6 ">'+
+									            '<span>'+ (Idx + 1) + '.  单号: '+Item.order_no + '<span style="color:red;display:inline-block;">'+ (Item.yuqi_status?'延期':'') +'</span>'+ '</span>'+
+									        '</div>'+
+									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
+									        	'<span onclick="ToFinishedOrder( '+ Idx +')">'+ (Item.wc_status==0 && ifCanFinish ?'完成':'') +'</span>'+
 									        '</div>'+
 									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
 									        	'<span onclick="ToModifyOrder( '+ Idx +')">修改</span>'+
@@ -106,17 +112,18 @@
 				            	})
 							}
 							$('.RecordList').append(OrderListHtml)
-						},'json'
-					);
+						},'json');
 			};
 			
 			document.getElementById("mySwitch").addEventListener("toggle",function(event){
 			  if(event.detail.isActive){
 			    console.log("你启动了开关");
+			    switchStatus = 0
 			    GetOrderList(0)
 			    
 			  }else{
 			    console.log("你关闭了开关");
+			    switchStatus = 1
 			    GetOrderList(1)
 			  }
 			})
@@ -155,10 +162,11 @@
 				}
 				
 			}
-			//去开工
+			//去流转开工
 			var ToOperationOrder = function(Idx){
 				window.localStorage.setItem('orderId',OrderList[Idx].order_no);
                 window.localStorage.setItem('orderDetail',JSON.stringify(OrderList[Idx]));
+                window.localStorage.setItem('orderFinished',OrderList[Idx].wc_status);
                 mui.openWindow({
 					    url:'../operation/index.html',
 					    id:'operation/index.html',
@@ -172,6 +180,37 @@
 					    url:'../orderModify/index.html',
 					    id:'orderModify/index.html',
 					})
+			};
+			
+			var ToFinishedOrder = function(Idx){
+				mui.ajax(Url + 'updateOrderStatus?orderno=' + OrderList[Idx].order_no,{
+						data:{},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{'Content-Type':'application/json'},	              
+						success:function(data){
+							switch(data.code){
+								case 0:
+									mui.toast(data.message,{ duration:'1500', type:'div' })
+									GetOrderList(switchStatus)
+									setTimeout(function(){
+										mask.close()
+										mui.back()
+									},1500)
+									
+									break
+								default:
+									mask.close()
+									mui.toast(data.message,{ duration:'1500', type:'div' })
+							}
+							
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
 			};
 			
 //			mui.init({

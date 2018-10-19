@@ -69,14 +69,15 @@
 					var OrderListHtml = ''
 					mui.get(Url + 'orderList',{},function(data){
 							OrderList = data.employeeList
-							if(data.employeeList.length <= 0){
+							if(data.employeeList.length > 0){
 								OrderListHtml = '<h4 class="emptyList">暂无订单</h4>'
 							}else{
 								data.employeeList.map(function(Item,Idx){
+									console.log(Item.wc_status)
 			            		OrderListHtml += '<li class="mui-table-view-cell">'+
 					            		'<div class="mui-row  recordItem">'+
-									        '<div class="mui-col-sm-8 mui-col-xs-8 ">'+
-									            '<span>'+ (Idx + 1) + '.  单号: '+ Item.order_no +'</span>'+
+									        '<div class="mui-col-sm-6 mui-col-xs-6 ">'+
+									            '<span>'+ (Idx + 1) + '.  单号2: '+ Item.order_no +'</span>'+
 									        '</div>'+
 									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
 									        	'<span onclick="ToModifyOrder( '+ Idx +')">修改</span>'+
@@ -93,7 +94,7 @@
 					);
 			};
 			
-			GetOrderList();
+			// GetOrderList();
 			$(function () {
 				mui.get(Url + 'orderIconList',{},function(res){
 		    		var IconList = {
@@ -112,7 +113,7 @@
 			
 			
 			window.addEventListener('refresh', function(e){//执行刷新  
-			  GetOrderList();
+			  // GetOrderList();
 			});
 			
 			// 查询
@@ -138,24 +139,7 @@
 					})
 			};
 			
-//			mui.init({
-//			  pullRefresh : {
-//			    container:"#refreshContainer",
-//			    down : {
-//			    	style:'circle',
-//			    	callback :pulldownRefresh
-//			    }
-//			  }
-//			});
-//			/**
-//			 * 下拉刷新具体业务实现
-//			 */
-//			function pulldownRefresh() {
-//				setTimeout(function() {
-//					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
-//					mui.toast("刷新完毕");
-//				}, 1500);
-//			}
+
 		</script>
 	</body>
 
