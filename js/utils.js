@@ -1,5 +1,5 @@
 var Url = 'http://39.106.121.17:8088/gxJK/'; 
-//'http://39.106.121.17:8088/gxJK/' 
+// var Url = 'http://205.168.1.105:8082/' 
 //js-sdk
 var sha1;
 (function (sha1) {

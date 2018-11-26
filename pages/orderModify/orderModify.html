@@ -380,6 +380,7 @@
 					var DD = {
 						'OrderDeatail':OrderData
 					}
+					mask.show()
 					mui.ajax(Url + 'updateOrder',{
 						data:OrderData,
 						dataType:'json',
@@ -400,6 +401,7 @@
 						},
 						error:function(xhr,type,errorThrown){
 							//异常处理；
+							mask.close()
 							console.log(type);
 						}
 					});

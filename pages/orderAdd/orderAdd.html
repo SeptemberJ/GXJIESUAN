@@ -38,6 +38,15 @@
 	<body>
 		<div class="mui-content">
 		    <div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem" style="height: 60px;line-height: 60px;;">
+		            <span class="LableSpan">选择客户</span>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+				    <div id="kehuSelect" style="border-bottom: 1px solid #000;">
+				    </div>
+		        </div>
+		    </div>
+		    <div class="mui-row">
 		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
 		            <span class="LableSpan">订单号</span>
 				    <input type="text" id="order_number"/>
@@ -126,6 +135,29 @@
 				$.init();
 				var mask = mui.createMask();
 				var AccessToken = '';
+			    var kehuListHtml = '';
+			    var kehuList = [];
+			    var kehuIdx = 0
+			    
+				// 获取客户列表
+				mui.get(Url + 'kehuList',{},function(data){
+					kehuList = data.kehuList;
+					var kehuLen = data.kehuList.length;
+					data.kehuList.map(function(Item,Idx){
+	            		kehuListHtml += '<option '+ (Idx==0?'selected': '') +' value='+ Idx + '>'+ Item.realname+ '</option>'
+	            		if (Idx == kehuLen-1) {
+	            			console.log(kehuListHtml)
+	            			$('#kehuSelect')[0].innerHTML = '<select id="choosedkEeHu">'+kehuListHtml +'</select>';
+	            			$('#choosedkEeHu')[0].addEventListener('change', function(event){
+								kehuIdx = $('#choosedkEeHu')[0].value
+							})
+	            		}
+					})
+				},'json');
+				
+
+				
+				
 				//yt
 				$('#order_yt_s')[0].addEventListener('tap', function(event) {
 					var dtPicker = new mui.DtPicker({"type": "date",}); 
@@ -274,6 +306,8 @@
 						return false
 			    	}
 					var OrderData = {
+						"khname": kehuList[kehuIdx].realname,
+						"khaccount": kehuList[kehuIdx].username,
 						"order_no": $("#order_number")[0].value,
 						"order_describe": $("#order_note")[0].value,
 						"fnumber": $("#order_amount")[0].value,
@@ -291,6 +325,10 @@
 						"cx2_begin_time": $('#order_cx2_s')[0].value,
 						"cx2_end_time": $('#order_cx2_e')[0].value,
 					}
+//					mask.show()
+					var mask = mui.createMask(function(){
+						return false;
+					});
 					mask.show()
 					mui.ajax(Url + 'insertOrder?acess_token=' + AccessToken + '&yxName=工序',{
 						data:OrderData,

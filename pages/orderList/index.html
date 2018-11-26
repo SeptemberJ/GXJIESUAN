@@ -82,9 +82,12 @@
 			});
 			
 			var GetOrderList = function(fstatus, orderNo){
+					var DepartmentId = window.localStorage.getItem('departmentId')
+					var Username = window.localStorage.getItem('username')
+					var Kh_type = window.localStorage.getItem('khtype')
 					var OrderListHtml = ''
 					var ifHasOrderNo = orderNo?'&order_no=' + orderNo : '';
-					mui.get(Url + 'orderList?fstatus=' + fstatus + ifHasOrderNo,{},function(data){
+					mui.get(Url + 'orderList?fstatus=' + fstatus + ifHasOrderNo + '&kh_type=' + Kh_type + '&username=' + Username,{},function(data){
 							OrderList = data.employeeList
 							$('.RecordList').empty()
 							if(data.employeeList.length <= 0){
@@ -102,7 +105,7 @@
 									        	'<span onclick="ToFinishedOrder( '+ Idx +')">'+ (Item.wc_status==0 && ifCanFinish ?'完成':'') +'</span>'+
 									        '</div>'+
 									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
-									        	'<span onclick="ToModifyOrder( '+ Idx +')">修改</span>'+
+									        	'<span onclick="ToModifyOrder( '+ Idx +')">' + (DepartmentId == '8a8a8aa863bc412a0163bddadef20008'?'修改':'') + '</span>'+
 									        '</div>'+
 									        '<div class="mui-col-sm-2 mui-col-xs-2 TextAlign_Right">'+
 									        	'<span onclick="ToOperationOrder( '+ Idx +')" >流转</span>'+

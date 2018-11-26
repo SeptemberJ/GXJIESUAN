@@ -58,11 +58,21 @@
 				window.localStorage.setItem('departmentIdZG',departmentList[IDX].gztype);
 				window.localStorage.setItem('departmentIdDD',departmentList[IDX].ordertype);
 				window.localStorage.setItem('departmentIdWC',departmentList[IDX].alltype);
-				
 				mui.openWindow({
 				    url:'../choose/index.html',
 				    id:'choose/index.html',
 				})
+//				if (departmentList[IDX].ID == 'kehuid') {
+//					mui.openWindow({
+//					    url:'../orderList/index.html',
+//					    id:'orderList/index.html',
+//					})
+//				} else {
+//					mui.openWindow({
+//					    url:'../choose/index.html',
+//					    id:'choose/index.html',
+//					})
+//				}
 			};
 			
 		</script>

@@ -121,6 +121,14 @@
 					})
 				},1500)
 			};
+			var ToOrderList = function(){
+				setTimeout(function(){
+					mui.openWindow({
+					    url:'../orderList/index.html',
+					    id:'orderList/index.html',
+					})
+				},1500)
+			};
 			function GetRequest() {
 			    return QueryString.data;
 			}
@@ -144,15 +152,24 @@
 			
 			function GetUserInfo(CODE){
 				//window.localStorage.setItem('role',0)
-				//window.localStorage.setItem('userid','2c91188d6459ccb901645d9c341a000d')
+				// window.localStorage.setItem('userid','2c91188d6459ccb901645d9c341a000d')
 				mui.get(Url + 'getOpen_id',{code:CODE,yxName:'工序'},function(res){
 					switch(res.code){
 						case 0:
 							mui.toast('登陆成功',{ duration:'1500', type:'div' })
 							window.localStorage.setItem('role',res.user.isManager)
 							window.localStorage.setItem('userid',res.user.ID)
-							
-							ToDepartment()
+							window.localStorage.setItem('khtype',res.user.khtype)
+							window.localStorage.setItem('username',res.user.username)
+							if (res.user.khtype == 1) {
+								window.localStorage.setItem('departmentId','kehu');
+								window.localStorage.setItem('departmentIdZG',0);
+								window.localStorage.setItem('departmentIdDD',0);
+								window.localStorage.setItem('departmentIdWC',0);
+								ToOrderList()
+							} else {
+								ToDepartment()
+							}
 							break
 						default:
 							mask.close()
@@ -164,7 +181,6 @@
 			};
 			
 			GetUserInfo(GetRequest()["code"])
-// alert('code='+ GetRequest()["code"])
 			/*
 			var loginButton = document.getElementById('login');
 			var accountBox = document.getElementById('account');
