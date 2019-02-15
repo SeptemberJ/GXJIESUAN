@@ -254,7 +254,7 @@
 				mui.get(Url + 'gongxuMath?fdepartId='+window.localStorage.getItem('departmentId'),{},function(data){
 						GongxuMathList = data.gongxuMathList
 						data.gongxuMathList.map(function(Item,Idx){
-		            		GongXuListHtml += '<option  value='+ Item.gongxu_price+' data-algorithmid='+ Item.id +'>'+ Item.gongxu_name+ '</option>'
+		            		GongXuListHtml += '<option  value='+ Item.gongxu_price + '|' + Item.id  +' data-algorithmid='+ Item.id +'>'+ Item.gongxu_name+ '</option>'
 		            	})
 					},'json'
 				);
@@ -332,8 +332,10 @@
 							success:function(data){
 								switch(data.code){
 									case 0:
-										mui.toast(data.message,{ duration:'1500', type:'div' })
-										mui.back()
+										mui.toast('新增成功',{ duration:'1500', type:'div', 'verticalAlign': 'bottom'})
+										setTimeout(function(){
+											mui.back()
+										},1400)
 										break
 									default:
 										mask.close()
@@ -369,6 +371,7 @@
 		    		return false
 		    	}
 		    })
+		    // ----------------------------
 		    
 			//添加
 			addOneWage.addEventListener('tap', function(event) {
@@ -485,21 +488,31 @@
 		    	var i = 0,
 			        ln = algorithmFields.length;
 			    for(;i<ln;i++) {
-			    	acreageFields[i].setAttribute('data-price',algorithmFields[i].value)
-			    	priceShow[i].innerHTML = '¥' + parseFloat(algorithmFields[i].value).toFixed(2)
-			    	ChangeAlgorithmId(i,algorithmFields[i].value)
+			    	var priceAndId = algorithmFields[i].value.split("|")
+			    	acreageFields[i].setAttribute('data-price',priceAndId[0])
+			    	priceShow[i].innerHTML = '¥' + parseFloat(priceAndId[0]).toFixed(2)
+			    	ChangeAlgorithmId(i,priceAndId[1])
 			    }
 			    calculateTotals()
 		    };
 		    
 		    //记录工序id
-		    var ChangeAlgorithmId =  function(Index,Price){
+		    var ChangeAlgorithmId =  function(Index,Id){
 		    	GongxuMathList.map(function(Item,Idx){
-		    		if(Item.gongxu_price == Price){
+		    		if(Item.id == Id){
 		    			acreageFields[Index].setAttribute('data-algorithmid',Item.id);
+		    			console.log(Item.id)
 		    		}
 		    	})
 		    };
+//		    var ChangeAlgorithmId =  function(Index,Price){
+//		    	GongxuMathList.map(function(Item,Idx){
+//		    		if(Item.gongxu_price == Price){
+//		    			acreageFields[Index].setAttribute('data-algorithmid',Item.id);
+//		    			console.log(Item.id)
+//		    		}
+//		    	})
+//		    };
 		    
 		    //自动生成单号
 		    var AutoOrderNo = function(){

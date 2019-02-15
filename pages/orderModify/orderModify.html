@@ -35,6 +35,15 @@
 	</style>
 	<body>
 		<div class="mui-content">
+			<div class="mui-row">
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem" style="height: 60px;line-height: 60px;;">
+		            <span class="LableSpan">选择客户</span>
+		        </div>
+		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
+				    <div id="kehuSelect" style="border-bottom: 1px solid #000;">
+				    </div>
+		        </div>
+		    </div>
 		    <div class="mui-row">
 		        <div class="mui-col-sm-6 mui-col-xs-6 OrderItem">
 		            <span class="LableSpan">订单号</span>
@@ -137,10 +146,35 @@
 				var mask = mui.createMask();
 				var orderId = '';
 				var orderStatus = '';
+				var kehuListHtml = '';
+			    var kehuList = [];
+			    var kehuIdx = 0
+			    
+				// 获取客户列表
+				var getKehuList = function (khaccount,khname) {
+					mui.get(Url + 'kehuList',{},function(data){
+						kehuList = data.kehuList;
+						var kehuLen = data.kehuList.length;
+						data.kehuList.map(function(Item,Idx){
+							if (Item.username==khaccount) {
+								kehuIdx = Idx
+							}
+		            		kehuListHtml += '<option '+ (Item.username==khaccount?'selected': '') +' value='+ Idx + '>'+ Item.realname+ '</option>'
+		            		if (Idx == kehuLen-1) {
+		            			console.log(kehuListHtml)
+		            			$('#kehuSelect')[0].innerHTML = '<select id="choosedkEeHu">'+kehuListHtml +'</select>';
+		            			$('#choosedkEeHu')[0].addEventListener('change', function(event){
+									kehuIdx = $('#choosedkEeHu')[0].value
+								})
+		            		}
+						})
+					},'json');
+				};
 				var GetOrderDetail =  function(){
 					mui.get(Url + 'order',{'order_no':window.localStorage.getItem('orderId')},function(data){
 						switch(data.code){
 							case 1:
+								getKehuList(data.order.khaccount,data.order.khname);
 								orderId = data.order.id;
 								orderStatus = data.order.fstatus;
 								$("#order_number")[0].value = data.order.order_no;
@@ -357,6 +391,8 @@
 						return false
 			    	}
 					var OrderData = {
+						"khname": kehuList[kehuIdx].realname,
+						"khaccount": kehuList[kehuIdx].username,
 						'orderid':orderId,
 						"order_no": $("#order_number")[0].value,
 						"order_describe": $("#order_note")[0].value,

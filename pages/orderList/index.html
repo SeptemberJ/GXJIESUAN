@@ -80,6 +80,9 @@
 				    id:'add/orderAdd.html',
 				})
 			});
+			if (window.localStorage.getItem('departmentId') != '8a8a8aa863bc412a0163bddadef20008') {
+				$('#addOneOrder').hide()
+			}
 			
 			var GetOrderList = function(fstatus, orderNo){
 					var DepartmentId = window.localStorage.getItem('departmentId')
