@@ -469,6 +469,7 @@
 		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 		<script type="text/javascript">
 			var mask = mui.createMask();
+			var kaigong = window.localStorage.getItem('kaigong')
 			var cuurDept = 6;
 		    // 压贴
 		    var yatie = "8a8a8aa863b038a00163b143e2ac0006";
@@ -542,6 +543,28 @@
 		
 		        var departmentId = window.localStorage.getItem('departmentId');
 		        var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
+		        
+		        // 开工判断
+	        	if(orderDetailData.fstatus==0 && kaigong == 1){
+	                $("#btnOpenWork").html("开工");
+	                $("#btnOpenWork").show();
+	           } else {
+	           	$("#btnOpenWork").hide();
+	           }
+//	        	else if(orderDetailData.fstatus==0 && kaigong == 0){
+//	                $("#btnOpenWork").html("未开工 没有权限开工");
+//	                $("#btnOpenWork").hide();
+//	            } 
+	            
+//	            else if(orderDetailData.fstatus==2 || orderDetailData.fstatus==3){
+//	                $("#btnOpenWork").html("已完成");
+//	                $("#btnOpenWork").show();
+//	            } else{
+//	                $("#btnOpenWork").html("已开工");
+//	                $("#btnOpenWork").show();
+//	            }
+	            
+	            //
 		
 		        $("#orderId").text(orderDetailData.order_no);
 		        $("#remark").text(orderDetailData.order_describe);
@@ -567,6 +590,7 @@
 //		                if(departmentId==yatie || departmentId==baozhuang){
 //		                    $("#btnOpenWork").show();
 //		                }
+						
 		                $.each(data.orderDetail,function(i,data){
 		                if(!data.fstatus){
 		                    data.fstatus = 0;
@@ -576,16 +600,15 @@
 		                    $("#yatie").html(data.id);
 		                    $('#yatie-status-txt').text(getStatus(data.fstatus))
 		                    $("#yatie-status").attr('src',getStatusIcon(data.fstatus))
-		                    if ($("#btnOpenWork").html() != "已完成") {
-		                    	if(data.fstatus==0){
-			                        $("#btnOpenWork").html("开工");
-			                        //$("#btnOpenWork").show();
-			                    }else{
-			                        $("#btnOpenWork").html("已开工");
-			                        //$("#btnOpenWork").show();
-			                    }
-		                    }
-		                    
+//		                    if ($("#btnOpenWork").html() != "已完成") {
+//		                    	if(data.fstatus==0){
+//			                        $("#btnOpenWork").html("开工");
+//			                        //$("#btnOpenWork").show();
+//			                    }else{
+//			                        $("#btnOpenWork").html("已开工");
+//			                        //$("#btnOpenWork").show();
+//			                    }
+//		                    }
 		                    if(data.fnumber>0){
 		                        $("#yatie").next().hide();
 		                        $("#yatie").next().next().text(data.fnumber);
@@ -681,26 +704,26 @@
 		                    if(data.fendtime){
 		                        $("#baozhuang-endTime").val(formatDateTime(data.fendtime.time));
 		                    }
-		                    if(data.fstatus==2 || data.fstatus==3){
-		                    	console.log('here 2223----------------')
-		                        $("#btnOpenWork").html("已完成");
-		                        //$("#btnOpenWork").show();
-		                        
-		                    }
+//		                    if(data.fstatus==2 || data.fstatus==3){
+//		                    	console.log('here 2223----------------')
+//		                        $("#btnOpenWork").html("已完成");
+//		                        //$("#btnOpenWork").show();
+//		                        
+//		                    }
 		                }
-		                if (i == last) {
-		                	if (orderFinishedStatus == 1) {
-		                		$("#btnOpenWork").html("已完成");
-		                		$("#btnOpenWork").show()
-		                	}else{
-		                		if (departmentId!=yatie && departmentId!=baozhuang && $("#btnOpenWork").html() == "开工") {
-			                		$("#btnOpenWork").html("未开工");
-			                		$("#btnOpenWork").show();
-			                	} else {
-			                		$("#btnOpenWork").show();
-			                	}
-		                	}
-		                }
+//		                if (i == last) {
+//		                	if (orderFinishedStatus == 1) {
+//		                		$("#btnOpenWork").html("已完成");
+//		                		$("#btnOpenWork").show()
+//		                	}else{
+//		                		if (departmentId!=yatie && departmentId!=baozhuang && $("#btnOpenWork").html() == "开工") {
+//			                		$("#btnOpenWork").html("未开工");
+//			                		$("#btnOpenWork").show();
+//			                	} else {
+//			                		$("#btnOpenWork").show();
+//			                	}
+//		                	}
+//		                }
 		            });
 		            // showNumberButton(data);
 		            if (orderFinishedStatus == 0){
@@ -1056,15 +1079,16 @@
 		                updateOpenWork($("#yatie_forder").text(),$("#yatie").text(),1);
 		                $(ele).html("已开工");
 		            }
-		        }else if(departmentId==baozhuang){
-		            if("完工"==$(ele).html()){
-		                var nowTime = new Date();
-		                var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
-		                var status = nowTime.getTime()>orderDetailData.bz_end_time.time?3:2;
-		                updateDetail($("#baozhuang").text(),$("#youqi").next().next().text(),status);
-		                $(ele).html("已完工");
-		            }
 		        }
+//		        else if(departmentId==baozhuang){
+//		            if("完工"==$(ele).html()){
+//		                var nowTime = new Date();
+//		                var orderDetailData =JSON.parse(window.localStorage.getItem('orderDetail'));
+//		                var status = nowTime.getTime()>orderDetailData.bz_end_time.time?3:2;
+//		                updateDetail($("#baozhuang").text(),$("#youqi").next().next().text(),status);
+//		                $(ele).html("已完工");
+//		            }
+//		        }
 		    }
 		
 		    function updateDetail(Forder,id,fnumber,fstatus){
